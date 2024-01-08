@@ -20,7 +20,7 @@ h2::after {
 }
 
 body {
-  background-image: url(/images/login-bg_nunes_temp.jpg);
+  background-image: url("../images/login-bg_nunes_temp.jpg");
 }
 
 header {
