@@ -1,0 +1,103 @@
+h1, h2, h3 {
+  margin: 0;
+}
+
+h2 {
+  margin-bottom: 32px;
+  position: relative;
+}
+
+h2::after {
+  content: '';
+  width: 32px;
+  height: 4px;
+  border-radius: 4px;
+  background: #000;
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+body {
+  background-image: url(/images/login-bg_nunes_temp.jpg);
+}
+
+header {
+  text-align: center;
+  margin: 20px;
+}
+
+.form-box {
+  width: 90%;
+  max-width: 500px;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%);
+  background: #4e4e4e49;
+  border-radius: 16px;
+  padding: 40px 60px 68px;
+  text-align: center;
+}
+
+.input-group {
+  height: 156px;
+}
+
+.input-field {
+  background: #eaeaea;
+  margin: 16px 84px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+#Email {
+  transition: max-height 0.5s;
+  overflow: hidden;
+}
+
+input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  padding: 12px 16px;
+}
+
+.input-field i {
+  margin-left: 16px;
+  color: #888;
+}
+
+.login-button {
+  margin: 8px 84px;
+}
+
+.login-button button {
+  width: 100%;
+  padding: 4px;
+  color: #eaeaea;
+  background: #666;
+  height: 40px;
+  border-radius: 4px;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+
+.forgot-password-signUp-group {
+  margin: 10px 84px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.forgot-password-signUp-group button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  background: transparent;
+}

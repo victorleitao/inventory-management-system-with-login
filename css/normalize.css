@@ -1,0 +1,26 @@
+html {
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-size: 64px;
+  font-weight: 900;
+}
+
+h2 {
+  font-size: 36px;
+}
+
+h3 {
+  font-size: 28px;
+}
+
+a {
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.login-button button {
+  font-size: 20px;
+  font-weight: bold;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Inventário Nunes Sports</title>
+  <link rel="icon" href="/images/favicon_nunes.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/3bdcc54860.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container">
+    <header class="loginHeader">
+      <h1>Nunes Sports</h1>
+      <h3>Sistema de Inventário</h3>
+    </header>
+    <main>
+      <section class="form-box">
+        <h2 id="title">Entrar</h2>
+        <!-- MUDAR PARA POST -->
+        <form action="" method="GET">
+          <div class="input-group">
+
+            <div class="input-field" id="Email">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="email" name="Email" placeholder="E-mail">
+            </div>
+
+            <div class="input-field">
+              <i class="fa-solid fa-user"></i>
+              <input type="text" id="Username" name="Username" placeholder="Usuário">
+            </div>
+
+            <div class="input-field">
+              <i class="fa-solid fa-key"></i>
+              <input type="password" id="Password" name="Password" placeholder="Senha">
+            </div>
+          </div>
+
+          <div class="login-button">
+            <button type="button" class="disable" id="signInBtn">Entrar</button>
+          </div>
+
+          <div class="forgot-password-signUp-group">
+            <button type="button" id="forgot-password">Esqueci minha senha</button>
+            <button type="button" id="signUp">Não possuo cadastro</button>
+          </div>
+        </form>
+      </section>
+    </main>
+    <footer></footer>
+  </div>
+  <script src="js/script.js"></script>
+</body>
+
+</html>
