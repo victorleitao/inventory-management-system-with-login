@@ -15,8 +15,8 @@
 </head>
 
 <body>
-  <section id="container">
-    <section class="dashboard-sidebar-container">
+  <section class="dashboard-container">
+    <section class="dashboard-sidebar-container" id="dashboard-sidebar">
       <div class="dashboard-logo">
         <h2>Nunes Sports</h2>
         <h3>Sistema de Inventário</h3>
@@ -29,7 +29,7 @@
       <div class="dashboard-divider"></div>
       <section class="dashboard-sidebar-menu">
         <ul class="dashboard-menu-lists">
-          <li>
+          <li class="menuActive">
             <a class="dashboard-link" href="">
               <i class="fa-solid fa-gauge"></i>
               <span class="dashboard-link-text">DASHBOARD</span>
@@ -52,7 +52,9 @@
     </section>
     <section class="dashboard-content-container">
       <nav class="dashboard-nav">
-        <a href=""><i id="dashboard-sidebar-icon" class="fa-solid fa-bars"></i></a>
+        <a href="" id="dashboardToggleBtn">
+          <i id="dashboard-sidebar-icon" class="fa-solid fa-bars"></i>
+        </a>
         <a class="dashboard-logout" href="index.html">
           <i class="fa-solid fa-door-open"></i>
           <span>SAIR</span>
@@ -65,6 +67,7 @@
       </main>
     </section>
   </section>
+  <script src="js/dashboardScript.js"></script>
 </body>
 
 </html>

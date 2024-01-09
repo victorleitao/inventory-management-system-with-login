@@ -102,8 +102,7 @@ input {
 }
 
 /* DASHBOARD STYLE */
-
-#container {
+.dashboard-container {
   display: flex;
   flex-direction: row;
 }
@@ -114,6 +113,13 @@ input {
   height: 98vh;
   border-radius: 10px 0 10px 10px;
   background: #4e4e4e49;
+}
+
+#dashboard-sidebar {
+  transition:
+    min-width 0.5s,
+    width 0.5s;
+  overflow: hidden;
 }
 
 .dashboard-logo {
@@ -149,33 +155,36 @@ input {
 .dashboard-menu-lists {
   list-style-type: none;
   padding: 0;
-  margin: 16px 20px;
+  margin: 16px 0;
 }
 
-.dashboard-menu-lists li {
-  margin: 16px 20px;
-  border-radius: 2em;
+.dashboard-menu-lists li.menuActive {
+  background: #4e4e4e49;
 }
 
 .dashboard-menu-lists li:hover {
   background: #4e4e4e49;
+  transition: 0.3s all;
 }
 
 .dashboard-link {
   display: inline-flex;
   width: 100%;
   align-items: center;
+  margin: 8px 0;
 }
 
-.dashboard-sidebar-menu i {
+.dashboard-link i {
   font-size: 1.5em;
   color: #000;
+  padding-left: 32px;
 }
 
 .dashboard-link-text {
   display: inline;
   text-align: center;
   width: 100%;
+  margin-left: -32px;
 }
 
 .dashboard-content-container {

@@ -1,3 +1,4 @@
+// LOGIN PAGE
 let emailField = document.getElementById('Email');
 emailField.style.maxHeight = '0';
 let signInBtn = document.getElementById('signInBtn');
