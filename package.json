@@ -1,0 +1,27 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "https://victorleitao.github.io/inventory-management-system-with-login/",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victorleitao/inventory-management-system-with-login.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/victorleitao/inventory-management-system-with-login/issues"
+  },
+  "homepage": "https://github.com/victorleitao/inventory-management-system-with-login#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "html": "^1.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "nodemon": "^3.0.2"
+  }
+}
