@@ -120,6 +120,11 @@ input {
     min-width 0.5s,
     width 0.5s;
   overflow: hidden;
+  white-space: nowrap;
+}
+
+#dashboard-logo, #user-info, #dashboard-menu-list {
+  transition: opacity 0.3s;
 }
 
 .dashboard-logo {
@@ -149,7 +154,11 @@ input {
 }
 
 .dashboard-sidebar-user span {
-  margin: 0 12px;
+ margin: 0 12px;
+}
+
+#user-name {
+  transition: margin 0.3s;
 }
 
 .dashboard-menu-lists {
