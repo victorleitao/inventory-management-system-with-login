@@ -1,1 +1,0 @@
-https://victorleitao.github.io/inventory-management-system-with-login/
