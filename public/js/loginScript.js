@@ -5,14 +5,20 @@ let signInBtn = document.getElementById('signInBtn');
 let signUpBtn = document.getElementById('signUp');
 let forgotPasswordBtn = document.getElementById('forgot-password');
 let title = document.getElementById('title');
+let email = document.getElementById('email');
+let form = document.getElementById('form');
 
 signUpBtn.onclick = () => {
 	if (signUpBtn.innerHTML === 'Não possuo cadastro') {
+		email.setAttribute('required', true);
+		form.setAttribute('action', '/register');
 		emailField.style.maxHeight = '44px';
 		title.innerHTML = 'Cadastrar';
 		signInBtn.innerHTML = 'Cadastrar';
 		signUpBtn.innerHTML = 'Já possuo cadastro';
 	} else {
+		email.removeAttribute('required');
+		form.setAttribute('action', '/login');
 		emailField.style.maxHeight = '0';
 		title.innerHTML = 'Entrar';
 		signInBtn.innerHTML = 'Entrar';

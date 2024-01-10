@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Inventário Nunes Sports</title>
-  <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="normalize.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
     <main>
       <section class="form-box">
         <h2 id="title">Entrar</h2>
-        <form action="/login" method="POST">
+        <form action="/login" method="POST" id="form">
           <div class="input-group">
 
             <div class="input-field" id="Email-field">
@@ -32,12 +32,12 @@
 
             <div class="input-field" id="Username-field">
               <i class="fa-solid fa-user"></i>
-              <input type="text" name="username" id="username" placeholder="Usuário">
+              <input type="text" name="name" id="name" placeholder="Usuário" autofocus required>
             </div>
 
             <div class="input-field" id="Password-field">
               <i class="fa-solid fa-key"></i>
-              <input type="password" name="password" id="password" placeholder="Senha">
+              <input type="password" name="password" id="password" placeholder="Senha" required>
             </div>
           </div>
 
@@ -54,7 +54,7 @@
     </main>
     <footer></footer>
   </div>
-  <script src="/js/loginScript.js"></script>
+  <script src="loginScript.js"></script>
 </body>
 
 </html>
