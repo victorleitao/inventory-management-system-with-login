@@ -1,16 +1,35 @@
-const { log } = require('console');
 const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const favicon = require('serve-favicon');
 const path = require('path');
 
-const app = express();
+app.use(
+	favicon(
+		path.join(__dirname, 'public/assets/images', 'favicon_nunes.ico')
+	)
+);
 
-app.get('/public', (req, res) => {
-	app.use(index);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.get('/', (req, res) => {
+	res.sendFile(path.join(__dirname, '/index.html'));
 });
 
-app.listen(3000);
+app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(express.static(path.join(__dirname, 'public')));
+app.post('/', (req, res) => {});
+
+app.listen(3000, () => {
+	console.log('Example app listening on port 3000!');
+});
+
+// app.set('view-engine', 'ejs');
+
+// app.get('/', (req, res) => {
+// 	res.render('index.ejs');
+// });
 
 // app.use((req, res) => {
 // 	res.status(404);

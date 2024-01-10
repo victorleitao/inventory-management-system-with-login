@@ -53,7 +53,7 @@ header {
   align-items: center;
 }
 
-#Email {
+#Email-field {
   transition: max-height 0.5s;
   overflow: hidden;
 }

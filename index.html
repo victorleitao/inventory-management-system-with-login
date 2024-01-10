@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Inventário Nunes Sports</title>
-  <link rel="icon" href="/images/favicon_nunes.png">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,23 +23,22 @@
     <main>
       <section class="form-box">
         <h2 id="title">Entrar</h2>
-        <!-- MUDAR PARA POST -->
-        <form action="" method="GET">
+        <form action="/index" method="POST">
           <div class="input-group">
 
-            <div class="input-field" id="Email">
+            <div class="input-field" id="Email-field">
               <i class="fa-solid fa-envelope"></i>
-              <input type="email" name="Email" placeholder="E-mail">
+              <input type="email" name="email" id="email" placeholder="E-mail">
             </div>
 
-            <div class="input-field" id="Username">
+            <div class="input-field" id="Username-field">
               <i class="fa-solid fa-user"></i>
-              <input type="text" name="Username" placeholder="Usuário">
+              <input type="text" name="username" id="username" placeholder="Usuário">
             </div>
 
-            <div class="input-field" id="Password">
+            <div class="input-field" id="Password-field">
               <i class="fa-solid fa-key"></i>
-              <input type="password" name="Password" placeholder="Senha">
+              <input type="password" name="password" id="password" placeholder="Senha">
             </div>
           </div>
 
@@ -57,7 +55,7 @@
     </main>
     <footer></footer>
   </div>
-  <script src="js/loginScript.js"></script>
+  <script src="/js/loginScript.js"></script>
 </body>
 
 </html>
