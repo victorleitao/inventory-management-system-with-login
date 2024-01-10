@@ -17,9 +17,17 @@ app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname, '/index.html'));
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.post('/login', (req, res) => {
+	let username = req.body.username;
+	let password = req.body.password;
+	if (username === 'admin' && password === 'admin') {
+		res.sendFile(path.join(__dirname, '/public/dashboard.html'));
+	} else {
+		res.send('Login failed.');
+	}
+});
 
-app.post('/', (req, res) => {});
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(3000, () => {
 	console.log('Example app listening on port 3000!');
