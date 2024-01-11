@@ -7,6 +7,8 @@ let userName = document.getElementById('user-name');
 let dashboardLogo = document.getElementById('dashboard-logo');
 let dashboardList = document.getElementById('dashboard-menu-list');
 
+userName.innerHTML = sessionStorage.getItem('loggedUser');
+
 dashboardToggleBtn.addEventListener('click', event => {
 	event.preventDefault();
 

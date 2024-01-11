@@ -1,3 +1,7 @@
+html {
+  height: 100%;
+}
+
 h1, h2, h3 {
   margin: 0;
 }
@@ -21,6 +25,7 @@ h2#title::after {
 
 body {
   background-image: url("./images/login-bg_nunes_temp.jpg");
+  background-size: cover;
 }
 
 header {
@@ -219,6 +224,17 @@ input {
 .dashboard-logout {
   display: inline-flex;
   align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+#logoutBtn {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  background: transparent;
 }
 
 .dashboard-logout span {

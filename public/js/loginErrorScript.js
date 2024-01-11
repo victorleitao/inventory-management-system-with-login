@@ -9,6 +9,9 @@ let email = document.getElementById('email');
 let name = document.getElementById('name');
 let form = document.getElementById('form');
 
+// ALERTA DE ERRO
+alert('Usuário ou senha incorretos!');
+
 signUpBtn.onclick = () => {
 	if (signUpBtn.innerHTML === 'Não possuo cadastro') {
 		email.setAttribute('required', true);

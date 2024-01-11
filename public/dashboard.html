@@ -54,10 +54,12 @@
         <a href="" id="dashboardToggleBtn">
           <i id="dashboard-sidebar-icon" class="fa-solid fa-bars"></i>
         </a>
-        <a class="dashboard-logout" href="/">
-          <i class="fa-solid fa-door-open"></i>
-          <span>SAIR</span>
-        </a>
+        <form action="/logout?_method=DELETE" method="POST" class="dashboard-logout">
+          <button class="dashboard-logout" id="logoutBtn" type="submit">
+            <i class="fa-solid fa-door-open"></i>
+            <span id="logoutTxt">SAIR</span>
+          </button>
+        </form>
       </nav>
       <main class="dashboard-content">
         <section class="dashboard-content-main">
