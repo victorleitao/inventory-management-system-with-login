@@ -29,6 +29,7 @@ signUpBtn.onclick = () => {
 
 signInBtn.onclick = () => {
 	sessionStorage.setItem('loggedUser', name.value);
+	sessionStorage.setItem('registeredEmail', email.value);
 };
 
 forgotPasswordBtn.onclick = () => {

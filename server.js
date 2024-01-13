@@ -41,8 +41,12 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 	res.sendFile(path.join(__dirname, '/index.html'));
 });
 
-app.get('/autherror', checkNotAuthenticated, (req, res) => {
-	res.sendFile(path.join(__dirname, '/public/autherror.html'));
+app.get('/loginerror', checkNotAuthenticated, (req, res) => {
+	res.sendFile(path.join(__dirname, '/public/loginerror.html'));
+});
+
+app.get('/registererror', checkNotAuthenticated, (req, res) => {
+	res.sendFile(path.join(__dirname, '/public/registererror.html'));
 });
 
 app.get('/goodregister', checkNotAuthenticated, (req, res) => {
@@ -57,7 +61,7 @@ app.post(
 	'/login',
 	passport.authenticate('local', {
 		successRedirect : '/dashboard',
-		failureRedirect : '/autherror'
+		failureRedirect : '/loginerror'
 	})
 );
 
@@ -75,11 +79,13 @@ app.post('/register', async (req, res) => {
 			password : hashedPassword
 		};
 
-		// VERIFICANDO REPETIÇÃO DE NOME DE USUÁRIO
+		// VERIFICANDO REPETIÇÃO DE NOME DE USUÁRIO JÁ EXISTENTE
 		const existingUser = await collection.findOne({ name: data.name });
-		if (existingUser) {
-			res.send('Usuário já existe! Favor escolher outro.');
-			// res.redirect('/chooseanotherusername')
+		const existingEmail = await collection.findOne({
+			email : data.email
+		});
+		if (existingUser || existingEmail) {
+			res.redirect('/registererror');
 		} else {
 			await collection.insertMany(data);
 			res.redirect('/goodregister');

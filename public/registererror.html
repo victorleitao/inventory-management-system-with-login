@@ -20,9 +20,12 @@
       <h3>Sistema de Inventário</h3>
     </header>
     <main>
+      <section class="alert-box" id="alert-box">
+        <h4>E-mail ou nome de usuário já existem no banco de dados.</h4>
+      </section>
       <section class="form-box">
-        <h2 id="title">Entrar</h2>
-        <form action="/login" method="POST" id="form">
+        <h2 id="title">Cadastrar</h2>
+        <form action="/register" method="POST" id="form">
           <div class="input-group">
 
             <div class="input-field email-field" id="Email-field">
@@ -42,19 +45,19 @@
           </div>
 
           <div class="login-button">
-            <button type="submit" id="signInBtn">Entrar</button>
+            <button type="submit" id="signInBtn">Cadastrar</button>
           </div>
 
           <div class="forgot-password-signUp-group">
             <button type="button" id="forgot-password">Esqueci minha senha</button>
-            <button type="button" id="signUp">Não possuo cadastro</button>
+            <button type="button" id="signUp">Já possuo cadastro</button>
           </div>
         </form>
       </section>
     </main>
     <footer></footer>
   </div>
-  <script src="loginScript.js"></script>
+  <script src="registerErrorScript.js"></script>
 </body>
 
 </html>

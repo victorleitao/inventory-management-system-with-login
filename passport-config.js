@@ -1,4 +1,3 @@
-// const passport = require('passport');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
 const collection = require('./dbconfig');
@@ -30,10 +29,8 @@ module.exports = function(passport) {
 				try {
 					const user = await findUser(name);
 
-					// usuário inexistente
+					// VERIFICANDO SE USUÁRIO EXISTE
 					if (!user) {
-						// VERIFICAR ESSA IMPLEMENTAÇÃO
-						console.log('usuário inexistente');
 						return done(null, false);
 					}
 

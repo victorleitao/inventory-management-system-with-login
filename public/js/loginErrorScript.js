@@ -8,9 +8,11 @@ let title = document.getElementById('title');
 let email = document.getElementById('email');
 let name = document.getElementById('name');
 let form = document.getElementById('form');
+let alertbox = document.getElementById('alert-box');
 
-// ALERTA DE ERRO
-alert('Usuário ou senha incorretos!');
+setTimeout(() => {
+	alertbox.style.opacity = '0';
+}, 2500);
 
 signUpBtn.onclick = () => {
 	if (signUpBtn.innerHTML === 'Não possuo cadastro') {
@@ -32,6 +34,7 @@ signUpBtn.onclick = () => {
 
 signInBtn.onclick = () => {
 	sessionStorage.setItem('loggedUser', name.value);
+	sessionStorage.setItem('registeredEmail', email.value);
 };
 
 forgotPasswordBtn.onclick = () => {

@@ -2,7 +2,7 @@ html {
   height: 100%;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   margin: 0;
 }
 
@@ -23,6 +23,11 @@ h2#title::after {
   transform: translateX(-50%);
 }
 
+.alert-box h4 {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-image: url("./images/login-bg_nunes_temp.jpg");
   background-size: cover;
@@ -31,6 +36,29 @@ body {
 header {
   text-align: center;
   margin: 20px;
+}
+
+.alert-box {
+  width: 100%;
+  width: 250px;
+  max-width: 250px;
+  position: absolute;
+  top: 16%;
+  left: 50%;
+  transform: translate(-50%);
+  background: #ff0000ca;
+  border-radius: 16px;
+  padding: 24px 20px;
+  text-align: center;
+}
+
+.good-alert {
+  background: #00ff00aa;
+}
+
+#alert-box {
+  transition: opacity 1s;
+  overflow: hidden;
 }
 
 .form-box {
@@ -58,7 +86,7 @@ header {
   align-items: center;
 }
 
-#Email-field {
+.email-field {
   transition: max-height 0.5s;
   overflow: hidden;
 }
