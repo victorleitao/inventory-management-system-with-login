@@ -1,34 +1,52 @@
-const LocalStrategy = require('passport-local').Strategy;
+// const passport = require('passport');
 const bcrypt = require('bcrypt');
+const LocalStrategy = require('passport-local').Strategy;
+const collection = require('./dbconfig');
 
-function initialize(passport, getUserByName, getUserById) {
-	const authenticateUser = async (name, password, done) => {
-		const user = getUserByName(name);
-		if (user == null) {
-			return done(null, false, {
-				message : 'Este nome de usuário não está cadastrado.'
-			});
-		}
+module.exports = function(passport) {
+	async function findUser(name) {
+		const username = await collection.findOne({ name: name });
+		return username;
+	}
 
-		try {
-			if (await bcrypt.compare(password, user.password)) {
-				return done(null, user);
-			} else {
-				return done(null, false, {
-					message : 'A senha está incorreta.'
-				});
-			}
-		} catch (e) {
-			return done(e);
-		}
-	};
-	passport.use(
-		new LocalStrategy({ usernameField: 'name' }, authenticateUser)
-	);
+	async function findUserById(id) {
+		const userId = await collection.findOne({ id: id });
+		return userId;
+	}
+
 	passport.serializeUser((user, done) => done(null, user.id));
-	passport.deserializeUser((id, done) => {
-		return done(null, getUserById(id));
+	passport.deserializeUser(async (id, done) => {
+		try {
+			const user = await findUserById(id);
+			done(null, user);
+		} catch (err) {
+			done(err, null);
+		}
 	});
-}
+	passport.use(
+		new LocalStrategy(
+			{ usernameField: 'name' },
+			async (name, password, done) => {
+				try {
+					const user = await findUser(name);
 
-module.exports = initialize;
+					// usuário inexistente
+					if (!user) {
+						// VERIFICAR ESSA IMPLEMENTAÇÃO
+						console.log('usuário inexistente');
+						return done(null, false);
+					}
+
+					// VERIFICANDO PASSWORD
+					if (await bcrypt.compare(password, user.password)) {
+						return done(null, user);
+					} else {
+						return done(null, false);
+					}
+				} catch (err) {
+					done(err, false);
+				}
+			}
+		)
+	);
+};
