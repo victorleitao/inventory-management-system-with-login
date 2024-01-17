@@ -6,18 +6,25 @@ const express = require('express');
 const app = express();
 const favicon = require('serve-favicon');
 const path = require('path');
-const bcrypt = require('bcrypt');
 const passport = require('passport');
 const session = require('express-session');
 const methodOverride = require('method-override');
-const collection = require('./dbconfig');
+const api = process.env.API_URL;
+const userRouter = require('./routers/users');
+const categoryRouter = require('./routers/categories');
+const productRouter = require('./routers/products');
 
+// Statics
 app.use(
 	favicon(
 		path.join(__dirname, 'public/assets/images', 'favicon_nunes.ico')
 	)
 );
+app.use(express.static(path.join(__dirname, 'public/css')));
+app.use(express.static(path.join(__dirname, 'public/js')));
+app.use(express.static(path.join(__dirname, 'public/assets')));
 
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 require('./passport-config')(passport);
@@ -32,6 +39,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
+app.use('/register', userRouter);
+app.use(api + '/categories', categoryRouter);
+app.use(api + '/products', productRouter);
 
 app.get('/', checkNotAuthenticated, (req, res) => {
 	res.sendFile(path.join(__dirname, '/index.html'));
@@ -65,36 +75,6 @@ app.post(
 	})
 );
 
-app.post('/register', async (req, res) => {
-	try {
-		const saltRounds = 10;
-		const hashedPassword = await bcrypt.hash(
-			req.body.password,
-			saltRounds
-		);
-		const data = {
-			id       : Date.now().toString(),
-			name     : req.body.name,
-			email    : req.body.email,
-			password : hashedPassword
-		};
-
-		// VERIFICANDO REPETIÇÃO DE NOME DE USUÁRIO JÁ EXISTENTE
-		const existingUser = await collection.findOne({ name: data.name });
-		const existingEmail = await collection.findOne({
-			email : data.email
-		});
-		if (existingUser || existingEmail) {
-			res.redirect('/registererror');
-		} else {
-			await collection.insertMany(data);
-			res.redirect('/goodregister');
-		}
-	} catch (error) {
-		res.redirect('/');
-	}
-});
-
 app.delete('/logout', (req, res) => {
 	req.logOut(function(err) {
 		if (err) {
@@ -103,10 +83,6 @@ app.delete('/logout', (req, res) => {
 		res.redirect('/login');
 	});
 });
-
-app.use(express.static(path.join(__dirname, 'public/css')));
-app.use(express.static(path.join(__dirname, 'public/js')));
-app.use(express.static(path.join(__dirname, 'public/assets')));
 
 function checkAuthenticated(req, res, next) {
 	if (req.isAuthenticated()) {
@@ -122,4 +98,6 @@ function checkNotAuthenticated(req, res, next) {
 	next();
 }
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000, () => {
+	// console.log();
+});

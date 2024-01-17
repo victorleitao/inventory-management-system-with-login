@@ -1,15 +1,16 @@
+require('./dbconfig');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
-const collection = require('./dbconfig');
+const userCollection = require('./models/user');
 
 module.exports = function(passport) {
 	async function findUser(name) {
-		const username = await collection.findOne({ name: name });
+		const username = await userCollection.findOne({ name: name });
 		return username;
 	}
 
 	async function findUserById(id) {
-		const userId = await collection.findOne({ id: id });
+		const userId = await userCollection.findOne({ id: id });
 		return userId;
 	}
 

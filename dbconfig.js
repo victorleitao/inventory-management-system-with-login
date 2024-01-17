@@ -9,26 +9,3 @@ connect
 	.catch(() => {
 		console.log('Database connection failed.');
 	});
-
-const loginSchema = new mongoose.Schema({
-	id       : {
-		type     : String,
-		required : true
-	},
-	name     : {
-		type     : String,
-		required : true
-	},
-	email    : {
-		type     : String,
-		required : true
-	},
-	password : {
-		type     : String,
-		required : true
-	}
-});
-
-const collection = new mongoose.model('users', loginSchema);
-
-module.exports = collection;
