@@ -23,13 +23,13 @@ h2#title::after {
   transform: translateX(-50%);
 }
 
-.alert-box h4 {
+.popup h4 {
   margin: 0;
   padding: 0;
 }
 
 body {
-  background-image: url("./images/login-bg_nunes_temp.jpg");
+  background-image: url("/background.jpg");
   background-size: cover;
 }
 
@@ -38,7 +38,7 @@ header {
   margin: 20px;
 }
 
-.alert-box {
+.popup {
   width: 100%;
   width: 250px;
   max-width: 250px;
@@ -46,19 +46,38 @@ header {
   top: 16%;
   left: 50%;
   transform: translate(-50%);
-  background: #ff0000ca;
   border-radius: 16px;
   padding: 24px 20px;
   text-align: center;
+  transition: opacity 1s;
+  overflow: hidden;
+}
+
+.red {
+  background: var(--red-color);
+}
+
+.green{
+  background: var(--green-color);
+}
+
+.popup::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--strong-color);
+  animation: anim 4s linear forwards;
+}
+
+@keyframes anim {
+  100%{width: 0;}
 }
 
 .good-alert {
   background: #00ff00aa;
-}
-
-#alert-box {
-  transition: opacity 1s;
-  overflow: hidden;
 }
 
 .form-box {
@@ -68,7 +87,7 @@ header {
   top: 25%;
   left: 50%;
   transform: translate(-50%);
-  background: #4e4e4e49;
+  background: var(--modal-color);
   border-radius: 16px;
   padding: 40px 60px 68px;
   text-align: center;
@@ -145,7 +164,7 @@ input {
   min-width: 320px;
   height: 98vh;
   border-radius: 10px 0 10px 10px;
-  background: #4e4e4e49;
+  background: var(--modal-color);
 }
 
 #dashboard-sidebar {
@@ -201,11 +220,11 @@ input {
 }
 
 .dashboard-menu-lists li.menuActive {
-  background: #4e4e4e49;
+  background: var(--modal-color);
 }
 
 .dashboard-menu-lists li:hover {
-  background: #4e4e4e49;
+  background: var(--modal-color);
   transition: 0.3s all;
 }
 
@@ -244,7 +263,7 @@ input {
 }
 
 #dashboard-sidebar-icon {
-  background: #4e4e4e49;
+  background: var(--modal-color);
   padding: 4px 6px 4px 0;
   border-radius: 0 4px 4px 0;
 }
@@ -270,7 +289,19 @@ input {
 }
 
 .dashboard-content {
-  margin: 8px;
+  margin: 8px 0 8px 8px;
   border-radius: 10px;
-  background: #4e4e4e49;
+  background: var(--modal-color);
+  height: 92.7vh;
+  transition: margin 0.3s;
+  overflow: hidden;
+}
+
+/* ROOT */
+
+:root{
+  --red-color: #ff4242c9;
+  --green-color: #45cb45c9;
+  --strong-color: #27272745;
+  --modal-color:#4e4e4e49;
 }

@@ -1,0 +1,55 @@
+<section class="dashboard-container">
+  <section class="dashboard-sidebar-container" id="dashboard-sidebar">
+    <div id="dashboard-logo" class="dashboard-logo">
+      <h2 id="dashboard-title">Nunes Sports</h2>
+      <h3 id="dashboard-subtitle">Sistema de Inventário</h3>
+    </div>
+    <div class="dashboard-divider"></div>
+    <section class="dashboard-sidebar-user" id="user-info">
+      <img id="profile-pic" src="/profile-pic-300x300.png" alt="Avatar do usuário.">
+      <span id="user-name">Nome</span>
+    </section>
+    <div class="dashboard-divider"></div>
+    <section class="dashboard-sidebar-menu">
+      <ul id="dashboard-menu-list" class="dashboard-menu-lists">
+        <li class="menuActive">
+          <a class="dashboard-link" href="">
+            <i class="fa-solid fa-table"></i>
+            <span class="dashboard-link-text">INVENTÁRIO</span>
+          </a>
+        </li>
+        <li>
+          <a class="dashboard-link" href="">
+            <i class="fa-solid fa-chart-line"></i>
+            <span class="dashboard-link-text">GRÁFICOS</span>
+          </a>
+        </li>
+        <li>
+          <a class="dashboard-link" href="">
+            <i class="fa-solid fa-sliders"></i>
+            <span class="dashboard-link-text">CONFIGURAÇÕES</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </section>
+  <section class="dashboard-content-container">
+    <nav class="dashboard-nav">
+      <a href="" id="dashboardToggleBtn">
+        <i id="dashboard-sidebar-icon" class="fa-solid fa-bars"></i>
+      </a>
+      <form action="/logout?_method=DELETE" method="POST" class="dashboard-logout">
+        <button class="dashboard-logout" id="logoutBtn" type="submit">
+          <i class="fa-solid fa-door-open"></i>
+          <span id="logoutTxt">SAIR</span>
+        </button>
+      </form>
+    </nav>
+    <main class="dashboard-content" id="dashboardContent">
+      <section class="dashboard-content-main">
+        <span>ABCD</span>
+      </section>
+    </main>
+  </section>
+</section>
+<script src="/dashboardScript.js"></script>

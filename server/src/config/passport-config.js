@@ -1,7 +1,6 @@
-require('./dbconfig');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
-const userCollection = require('./models/user');
+const userCollection = require('../models/user');
 
 module.exports = function(passport) {
 	async function findUser(name) {
@@ -36,7 +35,13 @@ module.exports = function(passport) {
 					}
 
 					// VERIFICANDO PASSWORD
-					if (await bcrypt.compare(password, user.password)) {
+					// if (await bcrypt.compare(password, user.password)) {
+					// 	return done(null, user);
+					// } else {
+					// 	console.log('chegou');
+					// 	return done(null, false);
+					// }
+					if (password === user.password) {
 						return done(null, user);
 					} else {
 						return done(null, false);

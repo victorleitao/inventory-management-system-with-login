@@ -1,2 +1,4 @@
-.env
-node_modules
+server/.env
+client/.env
+**/node_modules
+nunes_sports-workspace.code-workspace

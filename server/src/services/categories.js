@@ -25,8 +25,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
 	try {
-		const newCategory = {
-			name  : req.body.name,
+    const newCategory = {
+      name  : req.body.name,
 			code  : req.body.code,
 			color : req.body.color
 		};
@@ -52,8 +52,8 @@ router.post('/', async (req, res) => {
 		}
 	} catch (error) {
 		return res.status(400).json({
-			success : true,
-			error   : err
+			success : false,
+			error   : error
 		});
 	}
 });

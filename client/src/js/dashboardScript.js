@@ -6,6 +6,7 @@ let userInfo = document.getElementById('user-info');
 let userName = document.getElementById('user-name');
 let dashboardLogo = document.getElementById('dashboard-logo');
 let dashboardList = document.getElementById('dashboard-menu-list');
+const dashboardContent = document.getElementById('dashboardContent');
 
 userName.innerHTML = sessionStorage.getItem('loggedUser');
 
@@ -27,6 +28,11 @@ dashboardToggleBtn.addEventListener('click', event => {
 		sidebarIcon.style.borderRadius = '4px';
 		sidebarIcon.style.padding = '4px 6px';
 
+		// Change dashboard
+		setTimeout(() => {
+			dashboardContent.style.margin = '8px 0';
+		}, 300);
+
 		// Change boolean
 		isSidebarCollapsed = true;
 	} else {
@@ -43,6 +49,9 @@ dashboardToggleBtn.addEventListener('click', event => {
 		// Change sidebar icon
 		sidebarIcon.style.borderRadius = '0 4px 4px 0';
 		sidebarIcon.style.padding = '4px 6px 4px 0';
+
+		// Change dashboard
+		dashboardContent.style.margin = '8px 0 8px 8px';
 
 		// Change boolean
 		isSidebarCollapsed = false;
