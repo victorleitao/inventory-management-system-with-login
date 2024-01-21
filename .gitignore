@@ -2,3 +2,5 @@ server/.env
 client/.env
 **/node_modules
 nunes_sports-workspace.code-workspace
+client/src/views/testLayout.ejs
+client/src/views/test.ejs

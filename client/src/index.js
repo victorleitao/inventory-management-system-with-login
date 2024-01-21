@@ -17,6 +17,10 @@ app.use(express.static('src/assets'));
 app.use(express.static('src/css'));
 app.use(express.static('src/js'));
 
+app.get('/test', (req, res) => {
+	res.render('test.ejs', { layout: 'testLayout' });
+});
+
 app.get('/', (req, res) => {
 	res.render('login.ejs');
 });

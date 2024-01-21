@@ -12,20 +12,20 @@
     <div class="dashboard-divider"></div>
     <section class="dashboard-sidebar-menu">
       <ul id="dashboard-menu-list" class="dashboard-menu-lists">
-        <li class="menuActive">
-          <a class="dashboard-link" href="">
+        <li id="inventarioList" class="menuActive">
+          <a class="dashboard-link" id="inventario" href="">
             <i class="fa-solid fa-table"></i>
             <span class="dashboard-link-text">INVENTÁRIO</span>
           </a>
         </li>
-        <li>
-          <a class="dashboard-link" href="">
+        <li id="graficosList">
+          <a class="dashboard-link" id="graficos" href="">
             <i class="fa-solid fa-chart-line"></i>
             <span class="dashboard-link-text">GRÁFICOS</span>
           </a>
         </li>
-        <li>
-          <a class="dashboard-link" href="">
+        <li id="configuracoesList">
+          <a class="dashboard-link" id="configuracoes" href="">
             <i class="fa-solid fa-sliders"></i>
             <span class="dashboard-link-text">CONFIGURAÇÕES</span>
           </a>
@@ -47,9 +47,46 @@
     </nav>
     <main class="dashboard-content" id="dashboardContent">
       <section class="dashboard-content-main">
-        <span>ABCD</span>
+        <section class="dashboard-table">
+          <table class="product-table">
+            <tr class="product-table-header">
+              <th class="product-header-number">#</th>
+              <th class="product-header-details"><i class="fa-regular fa-file-lines"></i></th>
+              <th class="product-header-delete"><i class="fa-solid fa-trash"></i></th>
+              <th class="product-header-name">NOME</th>
+              <th class="product-header-code">CÓDIGO</th>
+              <th class="product-header-description">DESCRIÇÃO</th>
+              <th class="product-header-quantity">QTD</th>
+              <th class="product-header-price" colspan="2">VALOR (U/T)</th>
+            </tr>
+            <tr class="product-table-row">
+              <td class="product-item-number">1</td>
+              <td class="product-item-details"><i class="fa-solid fa-pen"></i></td>
+              <td class="product-item-delete"><i class="fa-solid fa-xmark"></i></td>
+              <td class="product-item-name">Luva de Goleiro</td>
+              <td class="product-item-code">12345</td>
+              <td class="product-item-description">Luva de Goleiro da Marca X tamanho G</td>
+              <td class="product-item-quantity">123</td>
+              <td class="product-item-u-price">9999,99</td>
+              <td class="product-item-t-price">99999,99</td>
+            </tr>
+          </table>
+        </section>
+        <section class="operations-menu">
+          <button class="add-product">
+            <i class="fa-solid fa-plus"></i>ADICIONAR PRODUTO
+          </button>
+          <button class="filter-products">
+            <i class="fa-solid fa-filter"></i>FILTRAR PRODUTOS
+          </button>
+          <button class="sum-products">
+            <i class="fa-solid fa-calculator"></i>CALCULAR TOTAL
+          </button>
+          <div class="sum-result">299,99</div>
+        </section>
       </section>
     </main>
   </section>
 </section>
-<script src="/dashboardScript.js"></script>
+<div id="popUpBox"></div>
+<script type="module" src="/dashboardScript.js"></script>

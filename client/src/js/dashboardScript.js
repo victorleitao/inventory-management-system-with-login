@@ -1,14 +1,36 @@
 // DASHBOARD PAGE
-let sidebar = document.getElementById('dashboard-sidebar');
-let sidebarIcon = document.getElementById('dashboard-sidebar-icon');
-let isSidebarCollapsed = false;
-let userInfo = document.getElementById('user-info');
-let userName = document.getElementById('user-name');
-let dashboardLogo = document.getElementById('dashboard-logo');
-let dashboardList = document.getElementById('dashboard-menu-list');
+import showPopUp from './modules/alert.js';
+const popUpBox = document.getElementById('popUpBox');
+const sidebar = document.getElementById('dashboard-sidebar');
+const sidebarIcon = document.getElementById('dashboard-sidebar-icon');
+const userInfo = document.getElementById('user-info');
+const userName = document.getElementById('user-name');
+const dashboardLogo = document.getElementById('dashboard-logo');
+const dashboardList = document.getElementById('dashboard-menu-list');
 const dashboardContent = document.getElementById('dashboardContent');
+const inventarioLi = document.getElementById('inventarioList');
+const graficosLi = document.getElementById('graficosList');
+const configuracoesLi = document.getElementById('configuracoesList');
+
+let isSidebarCollapsed = false;
+let listSelected = 'inventario';
 
 userName.innerHTML = sessionStorage.getItem('loggedUser');
+
+inventario.addEventListener('click', event => {
+	event.preventDefault();
+	selectInventario();
+});
+
+graficos.addEventListener('click', event => {
+	event.preventDefault();
+	selectGraficos();
+});
+
+configuracoes.addEventListener('click', event => {
+	event.preventDefault();
+	selectConfiguracoes();
+});
 
 dashboardToggleBtn.addEventListener('click', event => {
 	event.preventDefault();
@@ -29,9 +51,7 @@ dashboardToggleBtn.addEventListener('click', event => {
 		sidebarIcon.style.padding = '4px 6px';
 
 		// Change dashboard
-		setTimeout(() => {
-			dashboardContent.style.margin = '8px 0';
-		}, 300);
+		dashboardContent.style.left = '8px';
 
 		// Change boolean
 		isSidebarCollapsed = true;
@@ -44,16 +64,76 @@ dashboardToggleBtn.addEventListener('click', event => {
 
 		// Collapse sidebar
 		sidebar.style.minWidth = '320px';
-		sidebar.style.width = '20%';
 
 		// Change sidebar icon
 		sidebarIcon.style.borderRadius = '0 4px 4px 0';
 		sidebarIcon.style.padding = '4px 6px 4px 0';
 
 		// Change dashboard
-		dashboardContent.style.margin = '8px 0 8px 8px';
+		dashboardContent.style.left = '336px';
 
 		// Change boolean
 		isSidebarCollapsed = false;
 	}
 });
+
+function selectInventario() {
+	switch (listSelected) {
+		case 'inventario':
+			break;
+		case 'graficos':
+			inventarioLi.classList.add('menuActive');
+			graficosLi.classList.remove('menuActive');
+			configuracoesLi.classList.remove('menuActive');
+			break;
+		case 'configuracoes':
+			inventarioLi.classList.add('menuActive');
+			graficosLi.classList.remove('menuActive');
+			configuracoesLi.classList.remove('menuActive');
+			break;
+		default:
+	}
+	listSelected = 'inventario';
+}
+
+function selectGraficos() {
+	switch (listSelected) {
+		case 'inventario':
+			graficosLi.classList.add('menuActive');
+			inventarioLi.classList.remove('menuActive');
+			configuracoesLi.classList.remove('menuActive');
+			showPopUp(popUpBox, 'red');
+			break;
+		case 'graficos':
+			break;
+		case 'configuracoes':
+			graficosLi.classList.add('menuActive');
+			inventarioLi.classList.remove('menuActive');
+			configuracoesLi.classList.remove('menuActive');
+			showPopUp(popUpBox, 'red');
+			break;
+		default:
+	}
+	listSelected = 'graficos';
+}
+
+function selectConfiguracoes() {
+	switch (listSelected) {
+		case 'inventario':
+			configuracoesLi.classList.add('menuActive');
+			inventarioLi.classList.remove('menuActive');
+			graficosLi.classList.remove('menuActive');
+			showPopUp(popUpBox, 'red');
+			break;
+		case 'graficos':
+			configuracoesLi.classList.add('menuActive');
+			inventarioLi.classList.remove('menuActive');
+			graficosLi.classList.remove('menuActive');
+			showPopUp(popUpBox, 'red');
+			break;
+		case 'configuracoes':
+			break;
+		default:
+	}
+	listSelected = 'configuracoes';
+}

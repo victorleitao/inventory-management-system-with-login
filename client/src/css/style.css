@@ -1,5 +1,20 @@
 html {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  margin: 0;
+  padding: 8px;
+}
+
+body {
   height: 100%;
+  margin: 0;
+  padding: 0;
+  background-image: url("/background.jpg");
+  background-size: cover;
 }
 
 h1, h2, h3, h4 {
@@ -16,21 +31,24 @@ h2#title::after {
   width: 32px;
   height: 4px;
   border-radius: 4px;
-  background: #000;
+  background: var(--strong-color);
   position: absolute;
   bottom: -8px;
   left: 50%;
   transform: translateX(-50%);
 }
 
+.popup a {
+  position: absolute;
+  top: 10%;
+  left: 92%;
+  color: var(--black-color);
+  cursor: pointer;
+}
+
 .popup h4 {
   margin: 0;
   padding: 0;
-}
-
-body {
-  background-image: url("/background.jpg");
-  background-size: cover;
 }
 
 header {
@@ -74,10 +92,6 @@ header {
 
 @keyframes anim {
   100%{width: 0;}
-}
-
-.good-alert {
-  background: #00ff00aa;
 }
 
 .form-box {
@@ -130,7 +144,7 @@ input {
 .login-button button {
   width: 100%;
   padding: 4px;
-  background: #666;
+  background: var(--login-button-color);
   height: 40px;
   border-radius: 4px;
   border: 0;
@@ -157,12 +171,17 @@ input {
 .dashboard-container {
   display: flex;
   flex-direction: row;
+  right: 8px;
+  left: 8px;
+  top: 8px;
+  bottom: 8px;
+  height: 100%;
 }
 
 .dashboard-sidebar-container {
-  width: 20%;
+  margin: 0;
+  max-width: 320px;
   min-width: 320px;
-  height: 98vh;
   border-radius: 10px 0 10px 10px;
   background: var(--modal-color);
 }
@@ -188,7 +207,7 @@ input {
   margin: 16px 48px;
   height: 4px;
   border-radius: 4px;
-  background: #000;
+  background: var(--black-color);
 }
 
 .dashboard-sidebar-user {
@@ -202,7 +221,7 @@ input {
   width: 56px;
   display: inline-block;
   border-radius: 50%;
-  border: 2px solid black;
+  border: 2px solid var(--black-color);
 }
 
 .dashboard-sidebar-user span {
@@ -237,7 +256,7 @@ input {
 
 .dashboard-link i {
   font-size: 1.5em;
-  color: #000;
+  color: var(--black-color);
   padding-left: 32px;
 }
 
@@ -251,6 +270,7 @@ input {
 .dashboard-content-container {
   margin: 0;
   width: 100%;
+  height: 100%;
 }
 
 .dashboard-nav {
@@ -289,12 +309,129 @@ input {
 }
 
 .dashboard-content {
-  margin: 8px 0 8px 8px;
   border-radius: 10px;
+  padding: 8px;
+  position: absolute;
+  top: 48px;
+  right: 8px;
+  bottom: 8px;
+  left: 336px;
   background: var(--modal-color);
-  height: 92.7vh;
-  transition: margin 0.3s;
+  transition: left 0.5s, margin 30ms;
   overflow: hidden;
+}
+
+.dashboard-content-main {
+  height: 100%;
+}
+
+.dashboard-table {
+  position: relative;
+  height: calc(100% - 46px);
+  width: 100%;
+  overflow: hidden;
+  /* overflow: auto; */
+}
+
+.product-table {
+  width: 100%;
+  position: absolute;
+}
+
+.product-table-header {
+  background: var(--table-header-color);
+  height: 40px;
+}
+
+th {
+  padding: 0;
+}
+
+.product-table-row {
+  background: lightgray;
+  height: 36px;
+}
+
+.product-header-number {
+  width: 44px;
+  border-top-left-radius: 5px;
+}
+
+.product-header-details, .product-header-delete {
+  width: 36px;
+}
+
+.product-header-name {
+  min-width: 196px;
+}
+
+.product-header-code {
+  width: 88px;
+}
+
+.product-header-description {
+  min-width: 312px;
+}
+
+.product-header-quantity {
+  width: 49px;
+}
+
+.product-header-price {
+  min-width: 124px;
+  border-top-right-radius: 5px;
+}
+
+.product-item-number, .product-item-details, .product-item-delete, .product-item-code, .product-item-quantity, .product-item-u-price, .product-item-t-price {
+  text-align: center;
+}
+
+.product-item-details, .product-item-delete {
+  cursor: pointer;
+}
+
+.product-item-delete {
+  font-size: 1.4em;
+}
+
+.product-item-name, .product-item-description {
+  padding-left: 8px;
+}
+
+.operations-menu {
+  width: calc(100% - 20px);
+  height: 42px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  border-radius: 0 0 5px 5px;
+  background: var(--table-header-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.operations-menu button {
+  height: 70%;
+  padding-right: 8px;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  background: transparent;
+}
+
+.operations-menu i {
+  margin-right: 8px;
+}
+
+.add-product {
+  margin-left: 50px;
+}
+
+.sum-result {
+  width: 112px;
+  text-align: center;
+  overflow: auto;
 }
 
 /* ROOT */
@@ -303,5 +440,8 @@ input {
   --red-color: #ff4242c9;
   --green-color: #45cb45c9;
   --strong-color: #27272745;
+  --black-color: #111;
   --modal-color:#4e4e4e49;
+  --table-header-color: #666666cd;
+  --login-button-color: #666;
 }

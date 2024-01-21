@@ -26,10 +26,9 @@ a {
 }
 
 .login-button button {
-  font-family: 'Roboto', sans-serif;
   font-size: 20px;
   font-weight: bold;
-  color: #eaeaea;
+  color: var(--white-color);
 }
 
 button:disabled {
@@ -37,6 +36,7 @@ button:disabled {
 }
 
 button {
+  font-family: 'Roboto', sans-serif;
   color: var(--black-color);
 }
 
@@ -57,6 +57,23 @@ a.dashboard-link {
   font-weight: bold;
 }
 
+th {
+  font-size: 1.2em;
+}
+
+.sum-result {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--white-color);
+}
+
+.operations-menu button {
+  font-size: 1.2em;
+  font-weight: bolder;
+  color: var(--white-color);
+}
+
 :root {
   --black-color: #111;
+  --white-color: #eaeaea;
 }
