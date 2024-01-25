@@ -1,9 +1,0 @@
-<button type="submit" id="botao">BOTÃO</button>
-<script>
-  const botao = document.getElementById('botao');
-  botao.onclick = async () => {
-    const response = await fetch('http://localhost:3001/api/v1/products/65a7413aac9a7fa599495a56');
-    const data = await response.json();
-    botao.innerHTML = data.name;
-  }
-</script>

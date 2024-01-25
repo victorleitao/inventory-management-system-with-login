@@ -20,8 +20,38 @@ h4 {
   font-size: 18px;
 }
 
-a {
-  text-decoration: none;
+.add-product-modal h3 {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.add-product-modal input {
+  text-transform: uppercase;
+  font-size: 24px;
+  color: var(--black-color);
+}
+
+.add-product-modal input::placeholder {
+  text-transform: uppercase;
+  font-size: 24px;
+  color: var(--black-color);
+}
+
+.grid-area-product-description textarea {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  color: var(--black-color);
+}
+
+.grid-area-edit-button, .grid-area-delete-button {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--white-color);
+}
+
+.grid-area-exit-button {
+  font-size: 20px;
+  font-weight: bold;
   color: var(--black-color);
 }
 
@@ -37,6 +67,11 @@ button:disabled {
 
 button {
   font-family: 'Roboto', sans-serif;
+  color: var(--black-color);
+}
+
+a {
+  text-decoration: none;
   color: var(--black-color);
 }
 

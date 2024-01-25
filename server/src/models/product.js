@@ -27,9 +27,9 @@ const productSchema = mongoose.Schema({
 		required : true
 	},
 	countInStock : {
-		type : Number,
-		// required : true,
-		min  : 0
+		type     : Number,
+		required : true,
+		min      : 0
 	},
 	dateCreated  : {
 		type    : Date,

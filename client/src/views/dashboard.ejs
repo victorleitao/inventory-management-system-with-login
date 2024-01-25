@@ -48,7 +48,7 @@
     <main class="dashboard-content" id="dashboardContent">
       <section class="dashboard-content-main">
         <section class="dashboard-table">
-          <table class="product-table">
+          <table class="product-table" id="productTable">
             <tr class="product-table-header">
               <th class="product-header-number">#</th>
               <th class="product-header-details"><i class="fa-regular fa-file-lines"></i></th>
@@ -59,34 +59,66 @@
               <th class="product-header-quantity">QTD</th>
               <th class="product-header-price" colspan="2">VALOR (U/T)</th>
             </tr>
-            <tr class="product-table-row">
-              <td class="product-item-number">1</td>
-              <td class="product-item-details"><i class="fa-solid fa-pen"></i></td>
-              <td class="product-item-delete"><i class="fa-solid fa-xmark"></i></td>
-              <td class="product-item-name">Luva de Goleiro</td>
-              <td class="product-item-code">12345</td>
-              <td class="product-item-description">Luva de Goleiro da Marca X tamanho G</td>
-              <td class="product-item-quantity">123</td>
-              <td class="product-item-u-price">9999,99</td>
-              <td class="product-item-t-price">99999,99</td>
-            </tr>
           </table>
         </section>
         <section class="operations-menu">
-          <button class="add-product">
+          <button class="add-product" id="addProductButton">
             <i class="fa-solid fa-plus"></i>ADICIONAR PRODUTO
           </button>
-          <button class="filter-products">
+          <button class="filter-products" id="filterProductsButton">
             <i class="fa-solid fa-filter"></i>FILTRAR PRODUTOS
           </button>
-          <button class="sum-products">
-            <i class="fa-solid fa-calculator"></i>CALCULAR TOTAL
+          <button class="update-table" id="updateTableButton">
+            <i class="fa-solid fa-arrows-rotate"></i>ATUALIZAR TABELA
           </button>
-          <div class="sum-result">299,99</div>
+          <div class="sum-result" id="sumResult"></div>
         </section>
       </section>
     </main>
   </section>
 </section>
 <div id="popUpBox"></div>
+<div class="add-product-modal" id="addProductModal">
+  <div class="grid-area-product-image grid-center">
+    <div class="product-image-container">
+      <svg xmlns="http://www.w3.org/2000/svg" alt="Imagem do produto." viewBox="0 0 512 512">
+        <path
+          d="M448 80c8.8 0 16 7.2 16 16V415.8l-5-6.5-136-176c-4.5-5.9-11.6-9.3-19-9.3s-14.4 3.4-19 9.3L202 340.7l-30.5-42.7C167 291.7 159.8 288 152 288s-15 3.7-19.5 10.1l-80 112L48 416.3l0-.3V96c0-8.8 7.2-16 16-16H448zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm80 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z" />
+      </svg>
+    </div>
+  </div>
+  <div class="grid-area-product-name grid-center">
+    <h3>NOME DO PRODUTO:</h3>
+    <input type="text" name="product-name-label" id="productNameLabel" placeholder="" disabled>
+  </div>
+  <div class="grid-area-product-price grid-center">
+    <h3>PREÇO UNITÁRIO:</h3>
+    <input type="number" name="product-price-label" id="productPriceLabel" placeholder="" disabled>
+  </div>
+  <div class="grid-area-product-quantity grid-center">
+    <h3>QUANTIDADE EM ESTOQUE:</h3>
+    <div class="product-quantity-container">
+      <i class="fa-solid fa-minus" id="subtractProductQuantity"></i>
+      <input type="number" name="product-quantity-label" id="productQuantityLabel" placeholder="" disabled>
+      <i class="fa-solid fa-plus" id="addProductQuantity"></i>
+    </div>
+  </div>
+  <div class="grid-area-product-description center">
+    <h3>DESCRIÇÃO:</h3>
+    <textarea name="product-description-label" id="productDescriptionLabel" disabled></textarea>
+  </div>
+  <div class="grid-area-product-category grid-center">
+    <h3>CATEGORIA:</h3>
+    <input type="text" name="product-category-label" id="productCategoryLabel" placeholder="" disabled>
+  </div>
+  <div class="grid-area-product-code grid-center">
+    <h3>CÓDIGO:</h3>
+    <input type="number" name="product-code-label" id="productCodeLabel" placeholder="" disabled>
+  </div>
+  <button class="grid-area-edit-button grid-center" id="editModalButton">EDITAR</button>
+  <button class="grid-area-exit-button grid-center" id="closeModalButton">SAIR</button>
+  <button class="grid-area-delete-button grid-center" id="deleteModalButton">DELETAR</button>
+</div>
+<div class="filter-products-modal" id="filterProductsModal"></div>
+<div id="overlay"></div>
 <script type="module" src="/dashboardScript.js"></script>

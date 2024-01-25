@@ -14,9 +14,15 @@ const loginRouter = require(ROUTE_URL + '/login');
 const registerRouter = require(ROUTE_URL + '/register');
 const categoryRouter = require(SERVICES_URL + '/categories');
 const productRouter = require(SERVICES_URL + '/products');
+const cors = require('cors');
+
 
 // Connecting to DB
 require(CONFIG_URL + '/dbconfig');
+
+// CORS setup
+app.use(cors());
+app.options('*', cors());
 
 // Middleware
 app.use(express.json());

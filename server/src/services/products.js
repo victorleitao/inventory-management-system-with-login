@@ -12,12 +12,27 @@ router.get('/', async (req, res) => {
 	const productList = await productCollection
 		.find(filter)
 		.populate('category')
-		.select('-__v');
+		.select('-__v -dateCreated');
 
 	if (!productList) {
 		res.status(500).json({ success: false });
 	}
 	res.send(productList);
+});
+
+router.get('/search', async (req, res) => {
+	const product = await productCollection.findOne({
+		code : req.query.code
+	});
+
+	if (!product) {
+		return res.status(404).json({
+			success : false,
+			message : 'Não existe produto com este Código.'
+		});
+	}
+
+	res.status(200).send(product);
 });
 
 router.get('/:id', async (req, res) => {
@@ -58,11 +73,12 @@ router.post('/', async (req, res) => {
 		}
 
 		const newProduct = {
-			name        : req.body.name,
-			description : req.body.description,
-			code        : req.body.code,
-			price       : req.body.price,
-			category    : req.body.category
+			name         : req.body.name,
+			description  : req.body.description,
+			code         : req.body.code,
+			price        : req.body.price,
+			category     : req.body.category,
+			countInStock : req.body.countInStock
 		};
 
 		await productCollection.insertMany(newProduct);
@@ -71,9 +87,9 @@ router.post('/', async (req, res) => {
 			message : 'Produto cadastrado com sucesso.'
 		});
 	} catch (error) {
-		return res.status(400).json({
-			success : true,
-			error   : err
+		return res.status(404).json({
+			success : false,
+			error   : error
 		});
 	}
 });

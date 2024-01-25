@@ -2,7 +2,6 @@
 import showPopUp from './modules/alert.js';
 const popUpBox = document.getElementById('popUpBox');
 const emailField = document.getElementById('Email-field');
-emailField.style.maxHeight = '0';
 const signInBtn = document.getElementById('signInBtn');
 const signUpBtn = document.getElementById('signUp');
 const forgotPasswordBtn = document.getElementById('forgot-password');
