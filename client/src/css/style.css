@@ -52,7 +52,7 @@ i {
   color: var(--black-color);
 }
 
-/* || POPUP */
+/* || ALERT POPUP */
 
 .popup {
   width: 100%;
@@ -87,8 +87,16 @@ i {
   background: var(--red-color-trans);
 }
 
+.yellow {
+  background: var(--yellow-color-trans);
+}
+
 .green{
   background: var(--green-color-trans);
+}
+
+.gray{
+  background: var(--login-button-color);
 }
 
 .popup::after {
@@ -104,6 +112,37 @@ i {
 
 @keyframes anim {
   100%{width: 0;}
+}
+
+/* || CONFIRMATION POPUP */
+
+.confirmation {
+  width: 100%;
+  width: 250px;
+  max-width: 250px;
+  position: absolute;
+  top: 16%;
+  left: 50%;
+  transform: translate(-50%);
+  border-radius: 16px;
+  padding: 24px 20px;
+  text-align: center;
+  transition: opacity 200ms;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.confirmation a {
+  position: absolute;
+  top: 10%;
+  left: 92%;
+  color: var(--black-color);
+  cursor: pointer;
+}
+
+.confirmation h4 {
+  margin: 0;
+  padding: 0;
 }
 
 /* || LOGIN FORM */
@@ -369,7 +408,6 @@ th {
 
 .product-table-row {
   background: var(--table-row-color-odd);
-  height: 36px;
 }
 
 .product-table-row:nth-child(even) {
@@ -428,7 +466,12 @@ th {
 
 .product-item-name,
 .product-item-description {
-  padding-left: 8px;
+  padding: 8px;
+}
+
+.product-item-u-price,
+.product-item-t-price {
+  padding: 0 8px;
 }
 
 .operations-menu {
@@ -654,6 +697,7 @@ input::-webkit-inner-spin-button {
   --red-color-trans: #ff4242e1;
   --green-color: #45cb45;
   --green-color-trans: #45cb45c9;
+  --yellow-color-trans: #fdc347f5;
   --blue-color: #4545cb;
   --strong-color: #27272745;
   --stronger-color: #272727a0;

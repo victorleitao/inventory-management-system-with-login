@@ -1,13 +1,13 @@
-const showPopUp = (
+const showConfirmation = (
 	popUpBox,
-	color,
-	mensagem = 'Essa função ainda não foi implementada.'
+	color = 'yellow',
+	mensagem = 'Você tem certeza dessa ação?'
 ) => {
 	if (document.getElementById('closePopup')) {
 		return;
 	} else {
 		const popUp = document.createElement('div');
-		popUp.classList.add('popup');
+		popUp.classList.add('confirmation');
 		switch (color) {
 			case 'red':
 				popUp.classList.add('red');
@@ -26,20 +26,38 @@ const showPopUp = (
 		const closeButton = document.createElement('a');
 		closeButton.innerHTML = '<i class="fa-solid fa-xmark"></i>';
 		closeButton.setAttribute('id', 'closePopup');
+		const yesButton = document.createElement('button');
+		yesButton.innerHTML = 'Sim';
+		yesButton.setAttribute('id', 'affirmative');
+		const noButton = document.createElement('button');
+		noButton.innerHTML = 'Não';
+		noButton.setAttribute('id', 'negative');
 		popUp.appendChild(closeButton);
 		popUp.appendChild(popUpText);
+		popUp.appendChild(yesButton);
+		popUp.appendChild(noButton);
 		popUpBox.appendChild(popUp);
 		closePopup.addEventListener('click', event => {
 			event.preventDefault();
 			popUp.remove();
 		});
-		setTimeout(() => {
+		affirmative.addEventListener('click', event => {
 			popUp.style.opacity = '0';
-		}, 4000);
-		setTimeout(() => {
 			closeButton.removeAttribute('id');
-		}, 5000);
+			setTimeout(() => {
+				popUp.remove();
+			}, 200);
+			return true;
+		});
+		negative.addEventListener('click', event => {
+			popUp.style.opacity = '0';
+			closeButton.removeAttribute('id');
+			setTimeout(() => {
+				popUp.remove();
+			}, 200);
+			return false;
+		});
 	}
 };
 
-export default showPopUp;
+export default showConfirmation;

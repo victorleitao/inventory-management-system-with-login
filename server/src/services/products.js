@@ -82,9 +82,15 @@ router.post('/', async (req, res) => {
 		};
 
 		await productCollection.insertMany(newProduct);
-		return res.status(200).json({
+
+		const newRegister = await productCollection.findOne({
+			code : req.body.code
+		});
+
+		return res.status(201).json({
 			success : true,
-			message : 'Produto cadastrado com sucesso.'
+			message : 'Produto cadastrado com sucesso.',
+			id      : newRegister.id
 		});
 	} catch (error) {
 		return res.status(404).json({
@@ -109,12 +115,14 @@ router.put('/:id', async (req, res) => {
 		const existingCode = await productCollection.findOne({
 			code : req.body.code
 		});
-		if (existingCode) {
-			return res.status(400).json({
-				success : false,
-				message :
-					'Já existe um produto cadastrado sob este código.'
-			});
+		if (req.params.id !== existingCode.id) {
+			if (existingCode) {
+				return res.status(400).json({
+					success : false,
+					message :
+						'Já existe um produto cadastrado sob este código.'
+				});
+			}
 		}
 
 		const product = await productCollection.findByIdAndUpdate(
@@ -124,7 +132,7 @@ router.put('/:id', async (req, res) => {
 				description  : req.body.description,
 				code         : req.body.code,
 				price        : req.body.price,
-				image        : req.body.image,
+				// image        : req.body.image,
 				category     : req.body.category,
 				countInStock : req.body.countInStock
 			},
@@ -132,7 +140,7 @@ router.put('/:id', async (req, res) => {
 		);
 
 		if (!product) {
-			return res.status(400).json({
+			return res.status(404).json({
 				success : false,
 				message : 'Produto não existe.'
 			});
@@ -140,8 +148,8 @@ router.put('/:id', async (req, res) => {
 		res.status(200).send(product);
 	} catch (error) {
 		return res.status(400).json({
-			success : true,
-			error   : err
+			success : false,
+			error   : error
 		});
 	}
 });

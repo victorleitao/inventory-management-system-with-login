@@ -22,9 +22,6 @@ signUpBtn.onclick = () => {
 };
 
 signInBtn.onclick = async () => {
-	// const response = await fetch('http://localhost:3001/login', { method: POST });
-	// console.log(response);
-	// sessionStorage.setItem('registeredEmail', email.value);
 	if (!isRegistering) {
 		sessionStorage.setItem('loggedUser', name.value);
 	} else {
