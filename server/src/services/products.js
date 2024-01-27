@@ -51,9 +51,9 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
 	try {
-		const category = await categoryCollection.findById(
-			req.body.category
-		);
+		const category = await categoryCollection.findOne({
+			name : req.body.category
+		});
 		if (!category) {
 			return res.status(400).json({
 				success : false,
@@ -77,7 +77,7 @@ router.post('/', async (req, res) => {
 			description  : req.body.description,
 			code         : req.body.code,
 			price        : req.body.price,
-			category     : req.body.category,
+			category     : category.id,
 			countInStock : req.body.countInStock
 		};
 
@@ -102,13 +102,14 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
 	try {
-		const category = await categoryCollection.findById(
-			req.body.category
-		);
+		const category = await categoryCollection.findOne({
+			name : req.body.category
+		});
+
 		if (!category) {
 			return res.status(400).json({
 				success : false,
-				message : 'Não existe categoria com este ID.'
+				message : 'Não existe categoria com este nome.'
 			});
 		}
 
@@ -133,7 +134,7 @@ router.put('/:id', async (req, res) => {
 				code         : req.body.code,
 				price        : req.body.price,
 				// image        : req.body.image,
-				category     : req.body.category,
+				category     : category.id,
 				countInStock : req.body.countInStock
 			},
 			{ new: true }
@@ -145,7 +146,17 @@ router.put('/:id', async (req, res) => {
 				message : 'Produto não existe.'
 			});
 		}
-		res.status(200).send(product);
+
+		res.status(200).json({
+			_id          : product._id,
+			name         : product.name,
+			description  : product.description,
+			code         : product.code,
+			price        : product.price,
+			image        : product.image,
+			category     : category.name,
+			countInStock : product.countInStock
+		});
 	} catch (error) {
 		return res.status(400).json({
 			success : false,

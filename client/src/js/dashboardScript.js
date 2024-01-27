@@ -27,6 +27,12 @@ let productsSum = 0;
 let productQuantityValor = 0;
 let activeProductID = '';
 let numberOfRows = productsIDs.length;
+let unchangedName;
+let unchangedDescription;
+let unchangedCode;
+let unchangedPrice;
+let unchangedCategory;
+let unchangedQty;
 
 getProducts();
 
@@ -127,6 +133,7 @@ addProductButton.onclick = () => {
 };
 
 editModalButton.onclick = () => {
+	event.preventDefault();
 	if (isUpdatingProduct) {
 		saveProductData();
 	} else {
@@ -140,10 +147,12 @@ editModalButton.onclick = () => {
 };
 
 deleteModalButton.onclick = () => {
+	event.preventDefault();
 	deleteProduct();
 };
 
 closeModalButton.onclick = () => {
+	event.preventDefault();
 	closeModal();
 };
 
@@ -151,11 +160,10 @@ filterProductsButton.onclick = () => {
 	showPopUp(popUpBox, 'red');
 	// let confirmation = showConfirmation(popUpBox);
 	// if (confirmation) {
-	// 	console.log('Sim');
+	// 	return true;
 	// } else {
-	// 	console.log('Não');
+	// 	return false;
 	// }
-	// console.log(productsIDs);
 };
 
 updateTableButton.onclick = () => {
@@ -288,7 +296,7 @@ async function saveProductData() {
 			const description = productDescriptionLabel.value.toUpperCase();
 			const code = productCodeLabel.value;
 			const price = productPriceLabel.value;
-			const category = productCategoryLabel.value;
+			const category = productCategoryLabel.value.toUpperCase();
 			const qty = productQuantityLabel.value;
 			if (validateProductCode(code)) {
 				const id = await registerNewProduct(
@@ -321,17 +329,27 @@ async function saveProductData() {
 		const description = productDescriptionLabel.value.toUpperCase();
 		const code = productCodeLabel.value;
 		const price = productPriceLabel.value;
-		const category = productCategoryLabel.value;
+		const category = productCategoryLabel.value.toUpperCase();
 		const qty = productQuantityLabel.value;
-		updateProduct(
-			activeProductID,
-			name,
-			description,
-			code,
-			price,
-			category,
-			qty
-		);
+		if (
+			unchangedName === name &&
+			unchangedDescription === description &&
+			unchangedCode === code &&
+			unchangedPrice === price &&
+			unchangedCategory === category &&
+			unchangedQty === qty
+		) {
+		} else {
+			updateProduct(
+				activeProductID,
+				name,
+				description,
+				code,
+				price,
+				category,
+				qty
+			);
+		}
 		closeModal();
 	}
 }
@@ -453,6 +471,14 @@ function updateProductQuantity() {
 
 function openModal(id, name, code, description, qty, price, category) {
 	if (id) {
+		populateUnchangedVariables(
+			name,
+			code,
+			description,
+			qty,
+			price,
+			category
+		);
 		activeProductID = id;
 		enableDeleteButton();
 		productNameLabel.value = name;
@@ -472,6 +498,22 @@ function openModal(id, name, code, description, qty, price, category) {
 	addProductModal.style.scale = '1';
 	addProductModal.style.opacity = '1';
 	isModalOn = true;
+}
+
+function populateUnchangedVariables(
+	name,
+	code,
+	description,
+	qty,
+	price,
+	category
+) {
+	unchangedName = name;
+	unchangedDescription = description;
+	unchangedCode = code.toString();
+	unchangedPrice = price.toString();
+	unchangedCategory = category;
+	unchangedQty = qty.toString();
 }
 
 function enableEdition() {
@@ -587,6 +629,7 @@ function addLeadingZeros(num) {
 
 function replaceDot(priceString) {
 	priceString = priceString.replace(/\./, ',');
+	priceString = priceString.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.');
 	return priceString;
 }
 

@@ -78,7 +78,7 @@
   </section>
 </section>
 <div id="popUpBox"></div>
-<div class="add-product-modal" id="addProductModal">
+<form class="add-product-modal" id="addProductModal">
   <div class="grid-area-product-image grid-center">
     <div class="product-image-container">
       <svg xmlns="http://www.w3.org/2000/svg" alt="Imagem do produto." viewBox="0 0 512 512">
@@ -115,10 +115,10 @@
     <h3>CÓDIGO:</h3>
     <input type="number" name="product-code-label" id="productCodeLabel" placeholder="" disabled>
   </div>
-  <button class="grid-area-edit-button grid-center" id="editModalButton">EDITAR</button>
+  <button class="grid-area-edit-button grid-center" id="editModalButton" type="submit">EDITAR</button>
   <button class="grid-area-exit-button grid-center" id="closeModalButton">SAIR</button>
   <button class="grid-area-delete-button grid-center" id="deleteModalButton">DELETAR</button>
-</div>
+</form>
 <div class="filter-products-modal" id="filterProductsModal"></div>
 <div id="overlay"></div>
 <script type="module" src="/dashboardScript.js"></script>
