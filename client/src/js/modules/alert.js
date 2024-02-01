@@ -1,7 +1,8 @@
 const showPopUp = (
 	popUpBox,
 	color,
-	mensagem = 'Essa função ainda não foi implementada.'
+	mensagem = 'Essa função ainda não foi implementada.',
+	duration = 4000
 ) => {
 	if (document.getElementById('closePopup')) {
 		return;
@@ -23,11 +24,15 @@ const showPopUp = (
 		}
 		const popUpText = document.createElement('h4');
 		popUpText.innerHTML = mensagem;
+		const durationBar = document.createElement('div');
+		durationBar.setAttribute('id', 'durationBar');
+		durationBar.style.animation = `anim ${duration}ms linear forwards`;
 		const closeButton = document.createElement('a');
 		closeButton.innerHTML = '<i class="fa-solid fa-xmark"></i>';
 		closeButton.setAttribute('id', 'closePopup');
 		popUp.appendChild(closeButton);
 		popUp.appendChild(popUpText);
+		popUp.appendChild(durationBar);
 		popUpBox.appendChild(popUp);
 		closePopup.addEventListener('click', event => {
 			event.preventDefault();
@@ -35,10 +40,10 @@ const showPopUp = (
 		});
 		setTimeout(() => {
 			popUp.style.opacity = '0';
-		}, 4000);
+		}, duration);
 		setTimeout(() => {
 			closeButton.removeAttribute('id');
-		}, 5000);
+		}, duration + 1000);
 	}
 };
 

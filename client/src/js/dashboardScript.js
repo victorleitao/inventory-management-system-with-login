@@ -28,13 +28,17 @@ let listSelected = 'inventario';
 let productsSum = 0;
 let productQuantityValor = 0;
 let activeProductID = '';
+let activeCategoryID = '';
 let numberOfRows = productsIDs.length;
-let unchangedName;
-let unchangedDescription;
-let unchangedCode;
-let unchangedPrice;
-let unchangedCategory;
-let unchangedQty;
+let unchangedProductName;
+let unchangedProductDescription;
+let unchangedProductCode;
+let unchangedProductPrice;
+let unchangedProductCategory;
+let unchangedProductQty;
+let unchangedCategoryName;
+let unchangedCategoryCode;
+let unchangedCategoryColor;
 
 getProducts();
 
@@ -67,8 +71,30 @@ dashboardToggleBtn.addEventListener('click', event => {
 
 createCategoryModalButton.addEventListener('click', event => {
 	event.preventDefault();
-	registerNewCategory();
-	closeCategoryModal();
+	if (isCreatingNewCategory) {
+		if (validateCategory()) {
+			registerNewCategory();
+			closeCategoryModal();
+		} else {
+			showPopUp(
+				popUpBox,
+				'red',
+				'Todos os campos devem ser devidamente preenchidos.'
+			);
+		}
+	} else {
+		if (validateCategory()) {
+			updateCategory();
+			closeCategoryModal();
+			closeCategorySearch();
+		} else {
+			showPopUp(
+				popUpBox,
+				'red',
+				'Todos os campos devem ser devidamente preenchidos.'
+			);
+		}
+	}
 });
 
 exitCategoryModalButton.addEventListener('click', event => {
@@ -91,8 +117,12 @@ subtractProductQuantity.addEventListener('click', () => {
 			productQuantityValor--;
 			updateProductQuantity();
 		} else {
-			const mensagem = 'O valor não pode ser inferior a zero!';
-			showPopUp(popUpBox, 'red', mensagem);
+			showPopUp(
+				popUpBox,
+				'red',
+				'O valor não deve ser<br>inferior a 0 (zero)!',
+				3000
+			);
 		}
 	}
 });
@@ -151,8 +181,10 @@ filterProductsButton.onclick = () => {
 	showPopUp(popUpBox, 'red');
 	// let confirmation = showConfirmation(popUpBox);
 	// if (confirmation) {
+	// 	console.log(confirmation);
 	// 	return true;
 	// } else {
+	// 	console.log(confirmation);
 	// 	return false;
 	// }
 };
@@ -183,6 +215,78 @@ async function getCategories() {
 			categoryList[i].code,
 			categoryList[i].color
 		);
+	}
+}
+
+async function registerNewCategory() {
+	const name = categoryNameLabel.value.toUpperCase();
+	const code = categoryCodeLabel.value;
+	const color = categoryColorLabel.value.toUpperCase();
+	const response = await fetch(
+		'http://localhost:3001/api/v1/categories',
+		{
+			method  : 'POST',
+			headers : {
+				'Content-Type' : 'application/json'
+			},
+			body    : JSON.stringify({
+				name  : name,
+				code  : code,
+				color : color
+			})
+		}
+	);
+	productCategoryLabel.value = name;
+	const newCategory = await response.json();
+	const id = newCategory.id;
+	createCategoryItem(id, name, code, color);
+	showPopUp(
+		popUpBox,
+		'green',
+		'A categoria foi criada<br>com sucesso.',
+		3500
+	);
+}
+
+async function updateCategory() {
+	const name = categoryNameLabel.value.toUpperCase();
+	const code = categoryCodeLabel.value;
+	const color = categoryColorLabel.value.toUpperCase();
+	if (
+		unchangedCategoryName === name &&
+		unchangedCategoryCode === code &&
+		unchangedCategoryColor === color
+	) {
+		showPopUp(
+			popUpBox,
+			'yellow',
+			'Nenhuma alteração foi feita.',
+			3000
+		);
+	} else {
+		await fetch(
+			'http://localhost:3001/api/v1/categories/' + activeCategoryID,
+			{
+				method  : 'PUT',
+				headers : {
+					'Content-Type' : 'application/json'
+				},
+				body    : JSON.stringify({
+					name  : name,
+					code  : code,
+					color : color
+				})
+			}
+		);
+		showPopUp(
+			popUpBox,
+			'green',
+			'Categoria atualizada<br>com sucesso.',
+			3500
+		);
+		deleteCategoryItemLi(activeCategoryID, name);
+		createCategoryItem(activeCategoryID, name, code, color);
+		productCategoryLabel.value = name;
 	}
 }
 
@@ -221,7 +325,7 @@ function deleteCategoryItem(id, name) {
 		method : 'DELETE'
 	});
 	deleteCategoryItemLi(id, name);
-	showPopUp(popUpBox, 'red', 'Categoria deletada.');
+	showPopUp(popUpBox, 'red', 'Categoria deletada<br>com sucesso.', 3500);
 }
 
 function deleteCategoryItemLi(id, name) {
@@ -250,6 +354,101 @@ async function getProducts() {
 		productsSum += productList[i].countInStock * productList[i].price;
 	}
 	updateProductSum();
+}
+
+async function saveProductData() {
+	if (isCreatingNewProduct) {
+		if (
+			!productNameLabel.value ||
+			!productDescriptionLabel.value ||
+			!productCodeLabel.value ||
+			!productPriceLabel.value ||
+			!productCategoryLabel.value
+		) {
+			showPopUp(
+				popUpBox,
+				'red',
+				'Todos os campos devem ser devidamente preenchidos.'
+			);
+		} else {
+			const name = productNameLabel.value.toUpperCase();
+			const description = productDescriptionLabel.value.toUpperCase();
+			const code = productCodeLabel.value;
+			const price = productPriceLabel.value;
+			const category = productCategoryLabel.value.toUpperCase();
+			const qty = productQuantityLabel.value;
+			if (validateProductCode(code)) {
+				const id = await registerNewProduct(
+					name,
+					description,
+					code,
+					price,
+					category,
+					qty
+				);
+				createRow(
+					id,
+					name,
+					code,
+					description,
+					qty,
+					price,
+					category
+				);
+				showPopUp(
+					popUpBox,
+					'green',
+					'O produto foi criado<br>com sucesso.',
+					3000
+				);
+				productsSum += qty * price;
+				updateProductSum();
+				closeModal();
+			}
+		}
+	} else {
+		isUpdatingProduct = true;
+	}
+	if (isUpdatingProduct) {
+		const name = productNameLabel.value.toUpperCase();
+		const description = productDescriptionLabel.value.toUpperCase();
+		const code = productCodeLabel.value;
+		const price = productPriceLabel.value;
+		const category = productCategoryLabel.value.toUpperCase();
+		const qty = productQuantityLabel.value;
+		if (
+			unchangedProductName === name &&
+			unchangedProductDescription === description &&
+			unchangedProductCode === code &&
+			unchangedProductPrice === price &&
+			unchangedProductCategory === category &&
+			unchangedProductQty === qty
+		) {
+			showPopUp(
+				popUpBox,
+				'yellow',
+				'Nenhuma alteração foi feita.',
+				3000
+			);
+		} else {
+			updateProduct(
+				activeProductID,
+				name,
+				description,
+				code,
+				price,
+				category,
+				qty
+			);
+			showPopUp(
+				popUpBox,
+				'green',
+				'Produto alterado<br>com sucesso.',
+				3000
+			);
+		}
+		closeModal();
+	}
 }
 
 function createRow(id, name, code, description, qty, price, category) {
@@ -344,87 +543,6 @@ function createRow(id, name, code, description, qty, price, category) {
 	productTable.appendChild(productTableRow);
 }
 
-async function saveProductData() {
-	if (isCreatingNewProduct) {
-		if (
-			!productNameLabel.value ||
-			!productDescriptionLabel.value ||
-			!productCodeLabel.value ||
-			!productPriceLabel.value ||
-			!productCategoryLabel.value
-		) {
-			const mensagem = 'Todos os campos devem ser preenchidos.';
-			showPopUp(popUpBox, 'red', mensagem);
-		} else {
-			const name = productNameLabel.value.toUpperCase();
-			const description = productDescriptionLabel.value.toUpperCase();
-			const code = productCodeLabel.value;
-			const price = productPriceLabel.value;
-			const category = productCategoryLabel.value.toUpperCase();
-			const qty = productQuantityLabel.value;
-			if (validateProductCode(code)) {
-				const id = await registerNewProduct(
-					name,
-					description,
-					code,
-					price,
-					category,
-					qty
-				);
-				createRow(
-					id,
-					name,
-					code,
-					description,
-					qty,
-					price,
-					category
-				);
-				const mensagem = 'O produto foi criado com sucesso.';
-				showPopUp(popUpBox, 'green', mensagem);
-				productsSum += qty * price;
-				updateProductSum();
-				closeModal();
-			}
-		}
-	} else {
-		isUpdatingProduct = true;
-	}
-	if (isUpdatingProduct) {
-		const name = productNameLabel.value.toUpperCase();
-		const description = productDescriptionLabel.value.toUpperCase();
-		const code = productCodeLabel.value;
-		const price = productPriceLabel.value;
-		const category = productCategoryLabel.value.toUpperCase();
-		const qty = productQuantityLabel.value;
-		if (
-			unchangedName === name &&
-			unchangedDescription === description &&
-			unchangedCode === code &&
-			unchangedPrice === price &&
-			unchangedCategory === category &&
-			unchangedQty === qty
-		) {
-			const mensagem = 'Nenhuma alteração foi feita.';
-			showPopUp(popUpBox, 'yellow', mensagem);
-		} else {
-			updateProduct(
-				activeProductID,
-				name,
-				description,
-				code,
-				price,
-				category,
-				qty
-			);
-			const mensagem =
-				'As alterações no produto foram salvas com sucesso.';
-			showPopUp(popUpBox, 'green', mensagem);
-		}
-		closeModal();
-	}
-}
-
 async function registerNewProduct(
 	name,
 	description,
@@ -449,32 +567,6 @@ async function registerNewProduct(
 	});
 	const newProduct = await response.json();
 	return newProduct.id;
-}
-
-async function registerNewCategory() {
-	const name = categoryNameLabel.value.toUpperCase();
-	const code = categoryCodeLabel.value;
-	const color = categoryColorLabel.value.toUpperCase();
-	const response = await fetch(
-		'http://localhost:3001/api/v1/categories',
-		{
-			method  : 'POST',
-			headers : {
-				'Content-Type' : 'application/json'
-			},
-			body    : JSON.stringify({
-				name  : name,
-				code  : code,
-				color : color
-			})
-		}
-	);
-	const newCategory = await response.json();
-	const id = newCategory.id;
-	createCategoryItem(id, name, code, color);
-	productCategoryLabel.value = name;
-	const mensagem = 'A categoria foi criada com sucesso.';
-	showPopUp(popUpBox, 'green', mensagem);
 }
 
 async function updateProduct(
@@ -527,7 +619,7 @@ function updateProductQuantity() {
 function openModal(id, name, code, description, qty, price, category) {
 	getCategories();
 	if (id) {
-		populateUnchangedVariables(
+		populateUnchangedProductVariables(
 			name,
 			code,
 			description,
@@ -583,14 +675,19 @@ function clearModal() {
 }
 
 function openCategoryModal(id = '', name = '', code = '', color = '') {
+	disableCategoryEdition();
 	addCategoryModal.style.display = 'grid';
 	addCategoryModal.style.opacity = '1';
+	categoryNameLabel.focus();
+	openCategoryOverlay();
 	if (id) {
+		enableCategoryEdition();
+		populateUnchangedCategoryVariables(name, code, color);
+		activeCategoryID = id;
 		categoryNameLabel.value = name;
 		categoryCodeLabel.value = code;
 		categoryColorLabel.value = color;
 	}
-	openCategoryOverlay();
 }
 
 function closeCategoryModal() {
@@ -609,7 +706,7 @@ function clearCategoryModal() {
 	categoryColorLabel.value = '';
 }
 
-function populateUnchangedVariables(
+function populateUnchangedProductVariables(
 	name,
 	code,
 	description,
@@ -617,12 +714,18 @@ function populateUnchangedVariables(
 	price,
 	category
 ) {
-	unchangedName = name;
-	unchangedDescription = description;
-	unchangedCode = code.toString();
-	unchangedPrice = price.toString();
-	unchangedCategory = category;
-	unchangedQty = qty.toString();
+	unchangedProductName = name;
+	unchangedProductDescription = description;
+	unchangedProductCode = code.toString();
+	unchangedProductPrice = price.toString();
+	unchangedProductCategory = category;
+	unchangedProductQty = qty.toString();
+}
+
+function populateUnchangedCategoryVariables(name, code, color) {
+	unchangedCategoryName = name;
+	unchangedCategoryCode = code.toString();
+	unchangedCategoryColor = color;
 }
 
 function enableEdition() {
@@ -662,6 +765,16 @@ function disableEdition() {
 		enableDeleteButton();
 		isEditing = false;
 	}
+}
+
+function enableCategoryEdition() {
+	createCategoryModalButton.innerHTML = 'ATUALIZAR';
+	createCategoryModalButton.classList.add('active');
+}
+
+function disableCategoryEdition() {
+	createCategoryModalButton.innerHTML = 'CADASTRAR';
+	createCategoryModalButton.classList.remove('active');
 }
 
 function enableCreateCategoryButton() {
@@ -749,12 +862,41 @@ function replaceDot(priceString) {
 
 function validateProductCode(code) {
 	if (code.length > 6) {
-		const mensagem =
-			'O código do produto não pode ter mais que 6 (seis) dígitos.';
-		showPopUp(popUpBox, 'red', mensagem);
+		showPopUp(
+			popUpBox,
+			'red',
+			'O código do produto não pode ter mais que 6 (seis) dígitos.'
+		);
 		return false;
 	}
 	return true;
+}
+
+function validateCategory() {
+	const name = categoryNameLabel.value.toUpperCase();
+	const code = categoryCodeLabel.value;
+	const color = categoryColorLabel.value.toUpperCase();
+	if (name === '' && (code === '' || code === '0') && color === '') {
+		return false;
+	}
+	if (name === '') {
+		showPopUp(popUpBox, 'red', 'Informe o nome da categoria.', 3000);
+	} else if (code === '' || code === '0') {
+		showPopUp(
+			popUpBox,
+			'red',
+			'O código da categoria deve<br>ser diferente de 0 (zero).',
+			4500
+		);
+	} else if (color === '') {
+		showPopUp(
+			popUpBox,
+			'red',
+			'Escolha a cor desejada para representar a categoria.'
+		);
+	} else {
+		return true;
+	}
 }
 
 function selectInventario() {

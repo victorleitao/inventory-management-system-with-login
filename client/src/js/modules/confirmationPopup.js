@@ -41,17 +41,19 @@ const showConfirmation = (
 			event.preventDefault();
 			popUp.remove();
 		});
-		affirmative.addEventListener('click', event => {
+		affirmative.addEventListener('click', () => {
 			popUp.style.opacity = '0';
 			closeButton.removeAttribute('id');
+			console.log('verdade');
 			setTimeout(() => {
 				popUp.remove();
 			}, 200);
 			return true;
 		});
-		negative.addEventListener('click', event => {
+		negative.addEventListener('click', () => {
 			popUp.style.opacity = '0';
 			closeButton.removeAttribute('id');
+			console.log('mentira');
 			setTimeout(() => {
 				popUp.remove();
 			}, 200);

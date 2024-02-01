@@ -99,7 +99,7 @@ i {
   background: var(--login-button-color);
 }
 
-.popup::after {
+#durationBar {
   content: '';
   position: absolute;
   left: 0;
@@ -107,7 +107,6 @@ i {
   width: 100%;
   height: 5px;
   background: var(--strong-color);
-  animation: anim 4s linear forwards;
 }
 
 @keyframes anim {
@@ -725,7 +724,7 @@ th {
 
 .categories-list {
 margin: 8px 0;
-max-height: 200px;
+max-height: 230px;
 overflow-y: auto;
 padding: 0;
 }
@@ -914,7 +913,13 @@ input::-webkit-inner-spin-button {
 
 .grid-area-create-category-button {
   grid-column: span 2;
+}
+
+#createCategoryModalButton {
   background: var(--green-color);
+}
+#createCategoryModalButton.active {
+  background: var(--blue-color);
 }
 
 .grid-area-category-exit-button {
