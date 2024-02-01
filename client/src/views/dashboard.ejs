@@ -46,7 +46,7 @@
       </form>
     </nav>
     <main class="dashboard-content" id="dashboardContent">
-      <section class="dashboard-content-main">
+      <section class="dashboard-content-main" id="dashboardContentInventory">
         <section class="dashboard-table">
           <table class="product-table" id="productTable">
             <tr class="product-table-header">
@@ -74,10 +74,19 @@
           <div class="sum-result" id="sumResult"></div>
         </section>
       </section>
+      <section class="dashboard-content-main" id="dashboardContentGraphics">
+        <div>
+          <h2>ÁREA DE GRÁFICOS AINDA NÃO IMPLEMENTADA</h2>
+        </div>
+      </section>
+      <section class="dashboard-content-main" id="dashboardContentSettings">
+        <div>
+          <h2>ÁREA DE CONFIGURAÇÕES AINDA NÃO IMPLEMENTADA</h2>
+        </div>
+      </section>
     </main>
   </section>
 </section>
-<div id="popUpBox"></div>
 <form class="add-product-modal" id="addProductModal">
   <div class="grid-area-product-image grid-center">
     <div class="product-image-container">
@@ -108,8 +117,19 @@
     <textarea name="product-description-label" id="productDescriptionLabel" disabled></textarea>
   </div>
   <div class="grid-area-product-category grid-center">
-    <h3>CATEGORIA:</h3>
-    <input type="text" name="product-category-label" id="productCategoryLabel" placeholder="" disabled>
+    <h3>CATEGORIA:
+      <i class="fa-regular fa-square-plus tooltip" id="createCategoryButton">
+        <span class="tooltip-text">Criar Nova Categoria</span>
+      </i>
+    </h3>
+    <div class="category-select-container">
+      <input type="text" name="product-category-label" id="productCategoryLabel" placeholder="" disabled>
+      <div class="select-category-arrow" id="selectCategoryArrow"></div>
+    </div>
+    <div class="category-search-container" id="categorySearchContainer">
+      <ul class="categories-list" id="categoriesList">
+      </ul>
+    </div>
   </div>
   <div class="grid-area-product-code grid-center">
     <h3>CÓDIGO:</h3>
@@ -119,6 +139,29 @@
   <button class="grid-area-exit-button grid-center" id="closeModalButton">SAIR</button>
   <button class="grid-area-delete-button grid-center" id="deleteModalButton">DELETAR</button>
 </form>
+<form class="add-category-modal" id="addCategoryModal">
+  <div class="add-category-modal-title grid-center">
+    <h4>CADASTRO DE CATEGORIA</h4>
+  </div>
+  <div class="grid-area-category-name grid-center">
+    <h3>NOME:</h3>
+    <input type="text" name="category-name-label" id="categoryNameLabel">
+  </div>
+  <div class="grid-area-category-code grid-center">
+    <h3>CÓDIGO:</h3>
+    <input type="number" name="category-code-label" id="categoryCodeLabel">
+  </div>
+  <div class="grid-area-category-color grid-center">
+    <h3>COR:</h3>
+    <input type="text" name="category-color-label" id="categoryColorLabel">
+  </div>
+  <button class="grid-area-create-category-button grid-center" id="createCategoryModalButton"
+    type="submit">CADASTRAR</button>
+  <button class="grid-area-category-exit-button grid-center" id="exitCategoryModalButton">
+    SAIR</button>
+</form>
 <div class="filter-products-modal" id="filterProductsModal"></div>
+<div id="popUpBox"></div>
 <div id="overlay"></div>
+<div id="categoryOverlay"></div>
 <script type="module" src="/dashboardScript.js"></script>

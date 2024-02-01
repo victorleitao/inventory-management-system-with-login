@@ -20,6 +20,20 @@ h4 {
   font-size: 18px;
 }
 
+.tooltip .tooltip-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.8em;
+  color: var(--white-color);
+}
+
+.search input {
+  font-size: 0.8rem;
+}
+
+.categories li {
+  font-size: 0.8rem;
+}
+
 .add-product-modal h3 {
   font-size: 24px;
   font-weight: 900;
@@ -37,13 +51,36 @@ h4 {
   color: var(--black-color);
 }
 
+.add-category-modal input {
+  text-transform: uppercase;
+  font-size: 24px;
+  color: var(--black-color);
+}
+
+.add-category-modal h3 {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.add-category-modal h4 {
+  font-size: 20px;
+  font-weight: 900;
+}
+
 .grid-area-product-description textarea {
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
   color: var(--black-color);
 }
 
-.grid-area-edit-button, .grid-area-delete-button {
+.grid-area-edit-button,
+.grid-area-delete-button {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--white-color);
+}
+
+.grid-area-create-category-button {
   font-size: 18px;
   font-weight: bold;
   color: var(--white-color);
@@ -51,6 +88,12 @@ h4 {
 
 .grid-area-exit-button {
   font-size: 20px;
+  font-weight: bold;
+  color: var(--black-color);
+}
+
+.grid-area-category-exit-button {
+  font-size: 18px;
   font-weight: bold;
   color: var(--black-color);
 }

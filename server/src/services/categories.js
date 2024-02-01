@@ -25,8 +25,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
 	try {
-    const newCategory = {
-      name  : req.body.name,
+		const newCategory = {
+			name  : req.body.name,
 			code  : req.body.code,
 			color : req.body.color
 		};
@@ -45,9 +45,15 @@ router.post('/', async (req, res) => {
 			});
 		} else {
 			await categoryCollection.insertMany(newCategory);
+
+			const newRegister = await categoryCollection.findOne({
+				code : req.body.code
+			});
+
 			return res.status(200).json({
 				success : true,
-				message : 'Categoria cadastrada com sucesso.'
+				message : 'Categoria cadastrada com sucesso.',
+				id      : newRegister.id
 			});
 		}
 	} catch (error) {
