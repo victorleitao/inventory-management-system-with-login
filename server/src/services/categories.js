@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const categoryCollection = require('../models/category');
+const productCollection = require('../models/product');
 
 router.get('/', async (req, res) => {
 	const categoryList = await categoryCollection.find();
@@ -91,28 +92,44 @@ router.put('/:id', async (req, res) => {
 	}
 });
 
-router.delete('/:id', (req, res) => {
-	categoryCollection
-		.findByIdAndRemove(req.params.id)
-		.then(category => {
-			if (category) {
-				return res.status(200).json({
-					success : true,
-					message : 'Categoria removida.'
-				});
-			} else {
-				return res.status(404).json({
-					success : false,
-					message : 'Categoria não existe.'
-				});
-			}
+router.delete('/:id', async (req, res) => {
+	const category = await categoryCollection.findById(req.params.id);
+
+	const relatedProducts = await productCollection
+		.find({
+			category : category
 		})
-		.catch(err => {
-			return res.status(400).json({
-				success : true,
-				error   : err
-			});
+		.select('name -_id');
+
+	if (relatedProducts.length !== 0) {
+		return res.status(400).json({
+			success      : false,
+			message      : 'Há produtos registrados com esta categoria.',
+			productsList : relatedProducts
 		});
+	} else {
+		categoryCollection
+			.findByIdAndRemove(req.params.id)
+			.then(category => {
+				if (category) {
+					return res.status(200).json({
+						success : true,
+						message : 'Categoria removida.'
+					});
+				} else {
+					return res.status(404).json({
+						success : false,
+						message : 'Categoria não existe.'
+					});
+				}
+			})
+			.catch(err => {
+				return res.status(400).json({
+					success : true,
+					error   : err
+				});
+			});
+	}
 });
 
 const categoryRouter = router;

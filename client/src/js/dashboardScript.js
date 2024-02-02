@@ -320,12 +320,45 @@ function createCategoryItem(id, name, code, color) {
 	};
 }
 
-function deleteCategoryItem(id, name) {
-	fetch('http://localhost:3001/api/v1/categories/' + id, {
-		method : 'DELETE'
-	});
-	deleteCategoryItemLi(id, name);
-	showPopUp(popUpBox, 'red', 'Categoria deletada<br>com sucesso.', 3500);
+async function deleteCategoryItem(id, name) {
+	const response = await fetch(
+		'http://localhost:3001/api/v1/categories/' + id,
+		{
+			method : 'DELETE'
+		}
+	);
+	const status = await response.json();
+	if (status.success) {
+		deleteCategoryItemLi(id, name);
+		showPopUp(
+			popUpBox,
+			'red',
+			'Categoria deletada<br>com sucesso.',
+			3500
+		);
+	} else {
+		const productsList = status.productsList;
+		let mensagem =
+			'Essa categoria está registrada nos seguintes produtos:<p>';
+		let duration = 5000;
+		if (productsList.length > 1) {
+			for (let i = 0; i < productsList.length; i++) {
+				if (i === 0) {
+					mensagem += `${i + 1}. ${productsList[i].name}`;
+					duration += 1000;
+				} else {
+					mensagem += `<br>${i + 1}. ${productsList[i].name}`;
+					duration += 1000;
+				}
+			}
+			mensagem += '</p>Atualize-os para<br>permitir a exclusão.';
+		} else {
+			mensagem = `O produto ${productsList[0]
+				.name} pertence a esta categoria.<br><br>Atualize-o para<br>permitir a exclusão.`;
+			duration += 1000;
+		}
+		showPopUp(popUpBox, 'yellow', mensagem, duration);
+	}
 }
 
 function deleteCategoryItemLi(id, name) {

@@ -72,8 +72,8 @@ i {
 
 .popup a {
   position: absolute;
-  top: 10%;
-  left: 92%;
+  top: 10px;
+  right: 10px;
   color: var(--black-color);
   cursor: pointer;
 }
