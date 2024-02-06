@@ -13,9 +13,9 @@ app.set('layout', 'layouts/loginLayout');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(expressLayouts);
-app.use(express.static('src/assets'));
-app.use(express.static('src/css'));
-app.use(express.static('src/js'));
+app.use(express.static(__dirname + '/assets'));
+app.use(express.static(__dirname + '/css'));
+app.use(express.static(__dirname + '/js'));
 
 app.get('/test', (req, res) => {
 	res.render('test.ejs', { layout: 'testLayout' });
