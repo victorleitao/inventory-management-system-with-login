@@ -1,5 +1,5 @@
 // DASHBOARD PAGE
-// import showPopUp from './modules/alert.js';
+import showPopUp from './modules/alert.js';
 // import showConfirmation from './modules/confirmationPopup.js';
 const popUpBox = document.getElementById('popUpBox');
 const sidebar = document.getElementById('dashboard-sidebar');
