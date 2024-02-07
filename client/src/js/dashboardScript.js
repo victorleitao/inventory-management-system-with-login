@@ -26,18 +26,18 @@ let isSearchingCategories = false;
 let listSelected = 'inventario';
 let productsSum = 0;
 let productQuantityValor = 0;
-let activeProductID = '';
-let activeCategoryID = '';
 let numberOfRows = productsIDs.length;
-let unchangedProductName;
-let unchangedProductDescription;
-let unchangedProductCode;
-let unchangedProductPrice;
-let unchangedProductCategory;
-let unchangedProductQty;
-let unchangedCategoryName;
-let unchangedCategoryCode;
-let unchangedCategoryColor;
+let activeProductID = '';
+let activeProductName;
+let activeProductDescription;
+let activeProductCode;
+let activeProductPrice;
+let activeProductCategory;
+let activeProductQty;
+let activeCategoryID = '';
+let activeCategoryName;
+let activeCategoryCode;
+let activeCategoryColor;
 
 getProducts();
 
@@ -168,7 +168,7 @@ editModalButton.onclick = () => {
 
 deleteModalButton.onclick = () => {
 	event.preventDefault();
-	deleteProduct();
+	deleteProduct(activeProductID, activeProductQty, activeProductPrice);
 };
 
 closeModalButton.onclick = () => {
@@ -247,9 +247,9 @@ async function updateCategory() {
 	const code = categoryCodeLabel.value;
 	const color = categoryColorLabel.value.toUpperCase();
 	if (
-		unchangedCategoryName === name &&
-		unchangedCategoryCode === code &&
-		unchangedCategoryColor === color
+		activeCategoryName === name &&
+		activeCategoryCode === code &&
+		activeCategoryColor === color
 	) {
 		showPopUp(
 			popUpBox,
@@ -438,12 +438,12 @@ async function saveProductData() {
 		const category = productCategoryLabel.value.toUpperCase();
 		const qty = productQuantityLabel.value;
 		if (
-			unchangedProductName === name &&
-			unchangedProductDescription === description &&
-			unchangedProductCode === code &&
-			unchangedProductPrice === price &&
-			unchangedProductCategory === category &&
-			unchangedProductQty === qty
+			activeProductName === name &&
+			activeProductDescription === description &&
+			activeProductCode === code &&
+			activeProductPrice === price &&
+			activeProductCategory === category &&
+			activeProductQty === qty
 		) {
 			showPopUp(
 				popUpBox,
@@ -640,7 +640,7 @@ function updateProductQuantity() {
 function openModal(id, name, code, description, qty, price, category) {
 	getCategories();
 	if (id) {
-		populateUnchangedProductVariables(
+		populateActiveProductVariables(
 			name,
 			code,
 			description,
@@ -727,7 +727,7 @@ function clearCategoryModal() {
 	categoryColorLabel.value = '';
 }
 
-function populateUnchangedProductVariables(
+function populateActiveProductVariables(
 	name,
 	code,
 	description,
@@ -735,18 +735,18 @@ function populateUnchangedProductVariables(
 	price,
 	category
 ) {
-	unchangedProductName = name;
-	unchangedProductDescription = description;
-	unchangedProductCode = code.toString();
-	unchangedProductPrice = price.toString();
-	unchangedProductCategory = category;
-	unchangedProductQty = qty.toString();
+	activeProductName = name;
+	activeProductDescription = description;
+	activeProductCode = code.toString();
+	activeProductPrice = price.toString();
+	activeProductCategory = category;
+	activeProductQty = qty.toString();
 }
 
 function populateUnchangedCategoryVariables(name, code, color) {
-	unchangedCategoryName = name;
-	unchangedCategoryCode = code.toString();
-	unchangedCategoryColor = color;
+	activeCategoryName = name;
+	activeCategoryCode = code.toString();
+	activeCategoryColor = color;
 }
 
 function enableEdition() {
