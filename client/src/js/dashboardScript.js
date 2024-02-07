@@ -1,4 +1,5 @@
 // DASHBOARD PAGE
+const dataBaseURL = 'https://inventory-server-silk.vercel.app/api/v1/';
 const popUpBox = document.getElementById('popUpBox');
 const sidebar = document.getElementById('dashboard-sidebar');
 const sidebarIcon = document.getElementById('dashboard-sidebar-icon');
@@ -370,7 +371,7 @@ function deleteCategoryItemLi(id, name) {
 
 async function getProducts() {
 	productsSum = 0;
-	const response = await fetch('http://localhost:3001/api/v1/products/');
+	const response = await fetch(dataBaseURL + 'products/');
 	const productList = await response.json();
 	for (let i = 0; i < productList.length; i++) {
 		createRow(
