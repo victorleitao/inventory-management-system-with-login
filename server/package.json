@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "https://victorleitao.github.io/inventory-management-system-with-login/",
   "main": "src/server.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "node src/server.js",
     "devStart": "nodemon src/server.js"
