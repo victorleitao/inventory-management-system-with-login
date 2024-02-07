@@ -46,5 +46,3 @@ const showPopUp = (
 		}, duration + 1000);
 	}
 };
-
-export default showPopUp;

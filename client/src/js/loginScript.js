@@ -1,5 +1,4 @@
 // LOGIN PAGE
-import showPopUp from './modules/alert.js';
 const popUpBox = document.getElementById('popUpBox');
 const emailField = document.getElementById('Email-field');
 const signInBtn = document.getElementById('signInBtn');
