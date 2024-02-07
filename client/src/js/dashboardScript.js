@@ -203,9 +203,7 @@ createCategoryButton.onclick = () => {
 };
 
 async function getCategories() {
-	const response = await fetch(
-		'http://localhost:3001/api/v1/categories/'
-	);
+	const response = await fetch(dataBaseURL + 'categories/');
 	const categoryList = await response.json();
 	for (let i = 0; i < categoryList.length; i++) {
 		createCategoryItem(
@@ -221,20 +219,17 @@ async function registerNewCategory() {
 	const name = categoryNameLabel.value.toUpperCase();
 	const code = categoryCodeLabel.value;
 	const color = categoryColorLabel.value.toUpperCase();
-	const response = await fetch(
-		'http://localhost:3001/api/v1/categories',
-		{
-			method  : 'POST',
-			headers : {
-				'Content-Type' : 'application/json'
-			},
-			body    : JSON.stringify({
-				name  : name,
-				code  : code,
-				color : color
-			})
-		}
-	);
+	const response = await fetch(dataBaseURL + 'categories', {
+		method  : 'POST',
+		headers : {
+			'Content-Type' : 'application/json'
+		},
+		body    : JSON.stringify({
+			name  : name,
+			code  : code,
+			color : color
+		})
+	});
 	productCategoryLabel.value = name;
 	const newCategory = await response.json();
 	const id = newCategory.id;
@@ -263,20 +258,17 @@ async function updateCategory() {
 			3000
 		);
 	} else {
-		await fetch(
-			'http://localhost:3001/api/v1/categories/' + activeCategoryID,
-			{
-				method  : 'PUT',
-				headers : {
-					'Content-Type' : 'application/json'
-				},
-				body    : JSON.stringify({
-					name  : name,
-					code  : code,
-					color : color
-				})
-			}
-		);
+		await fetch(dataBaseURL + 'categories/' + activeCategoryID, {
+			method  : 'PUT',
+			headers : {
+				'Content-Type' : 'application/json'
+			},
+			body    : JSON.stringify({
+				name  : name,
+				code  : code,
+				color : color
+			})
+		});
 		showPopUp(
 			popUpBox,
 			'green',
@@ -320,12 +312,9 @@ function createCategoryItem(id, name, code, color) {
 }
 
 async function deleteCategoryItem(id, name) {
-	const response = await fetch(
-		'http://localhost:3001/api/v1/categories/' + id,
-		{
-			method : 'DELETE'
-		}
-	);
+	const response = await fetch(dataBaseURL + 'categories/' + id, {
+		method : 'DELETE'
+	});
 	const status = await response.json();
 	if (status.success) {
 		deleteCategoryItemLi(id, name);
@@ -583,7 +572,7 @@ async function registerNewProduct(
 	category,
 	qty
 ) {
-	const response = await fetch('http://localhost:3001/api/v1/products', {
+	const response = await fetch(dataBaseURL + 'products/', {
 		method  : 'POST',
 		headers : {
 			'Content-Type' : 'application/json'
@@ -610,7 +599,7 @@ async function updateProduct(
 	category,
 	qty
 ) {
-	await fetch('http://localhost:3001/api/v1/products/' + id, {
+	await fetch(dataBaseURL + 'products/' + id, {
 		method  : 'PUT',
 		headers : {
 			'Content-Type' : 'application/json'
@@ -630,7 +619,7 @@ async function updateProduct(
 function deleteProduct(id, qty, price) {
 	productsSum -= qty * price;
 	updateProductSum();
-	fetch('http://localhost:3001/api/v1/products/' + id, {
+	fetch(dataBaseURL + 'products/' + id, {
 		method : 'DELETE'
 	});
 	deleteProductRow(id);
