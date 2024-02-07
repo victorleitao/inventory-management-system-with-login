@@ -4,20 +4,21 @@ const productCollection = require('../models/product');
 const categoryCollection = require('../models/category');
 
 router.get('/', async (req, res) => {
-	let filter = {};
-	if (req.query.categories) {
-		filter = { category: req.query.categories.split(',') };
-	}
+	// let filter = {};
+	// if (req.query.categories) {
+	// 	filter = { category: req.query.categories.split(',') };
+	// }
 
-	const productList = await productCollection
-		.find(filter)
-		.populate('category')
-		.select('-__v -dateCreated');
+	// const productList = await productCollection
+	// 	.find(filter)
+	// 	.populate('category')
+	// 	.select('-__v -dateCreated');
 
-	if (!productList) {
-		res.status(500).json({ success: false });
-	}
-	res.send(productList);
+	// if (!productList) {
+	// 	res.status(500).json({ success: false });
+	// }
+	// res.send(productList);
+	res.send('Olar, produtos!');
 });
 
 router.get('/search', async (req, res) => {
