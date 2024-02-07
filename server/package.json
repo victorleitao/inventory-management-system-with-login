@@ -2,13 +2,10 @@
   "name": "package",
   "version": "1.0.0",
   "description": "https://victorleitao.github.io/inventory-management-system-with-login/",
-  "main": "src/server.js",
-  "engines": {
-    "node": "18.x"
-  },
+  "main": "src/index.js",
   "scripts": {
-    "start": "node src/server.js",
-    "devStart": "nodemon src/server.js"
+    "start": "node src/index.js",
+    "devStart": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",

@@ -5,7 +5,6 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
-// const path = require('path');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
