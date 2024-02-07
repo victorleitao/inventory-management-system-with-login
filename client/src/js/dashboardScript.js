@@ -153,7 +153,7 @@ addProductButton.onclick = () => {
 };
 
 editModalButton.onclick = () => {
-	// event.preventDefault();
+	event.preventDefault();
 	if (isUpdatingProduct) {
 		saveProductData();
 	} else {
@@ -167,12 +167,12 @@ editModalButton.onclick = () => {
 };
 
 deleteModalButton.onclick = () => {
-	// event.preventDefault();
+	event.preventDefault();
 	deleteProduct();
 };
 
 closeModalButton.onclick = () => {
-	// event.preventDefault();
+	event.preventDefault();
 	closeModal();
 };
 
