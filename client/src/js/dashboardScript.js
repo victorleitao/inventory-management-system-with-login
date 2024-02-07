@@ -169,6 +169,7 @@ editModalButton.onclick = () => {
 deleteModalButton.onclick = () => {
 	event.preventDefault();
 	deleteProduct(activeProductID, activeProductQty, activeProductPrice);
+	closeModal();
 };
 
 closeModalButton.onclick = () => {
