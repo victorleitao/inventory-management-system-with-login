@@ -16,7 +16,6 @@ const categoryRouter = require(SERVICES_URL + '/categories');
 const productRouter = require(SERVICES_URL + '/products');
 const cors = require('cors');
 
-
 // Connecting to DB
 require(CONFIG_URL + '/dbconfig');
 
@@ -40,6 +39,10 @@ app.use(api + '/categories', categoryRouter);
 app.use(api + '/products', productRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
+
+app.get('/', (req, res) => {
+	return res.json('Olar!');
+});
 
 // Listen
 app.listen(process.env.PORT || 3001);
