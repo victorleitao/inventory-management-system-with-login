@@ -1,6 +1,6 @@
 // DASHBOARD PAGE
-import showPopUp from './modules/alert.js';
-import showConfirmation from './modules/confirmationPopup.js';
+// import showPopUp from './modules/alert.js';
+// import showConfirmation from './modules/confirmationPopup.js';
 const popUpBox = document.getElementById('popUpBox');
 const sidebar = document.getElementById('dashboard-sidebar');
 const sidebarIcon = document.getElementById('dashboard-sidebar-icon');
@@ -154,7 +154,7 @@ addProductButton.onclick = () => {
 };
 
 editModalButton.onclick = () => {
-	event.preventDefault();
+	// event.preventDefault();
 	if (isUpdatingProduct) {
 		saveProductData();
 	} else {
@@ -168,12 +168,12 @@ editModalButton.onclick = () => {
 };
 
 deleteModalButton.onclick = () => {
-	event.preventDefault();
+	// event.preventDefault();
 	deleteProduct();
 };
 
 closeModalButton.onclick = () => {
-	event.preventDefault();
+	// event.preventDefault();
 	closeModal();
 };
 
