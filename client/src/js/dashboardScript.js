@@ -15,6 +15,7 @@ const addProductButton = document.getElementById('addProductButton');
 const addProductModal = document.getElementById('addProductModal');
 const productsIDs = [];
 const categoriesIDs = [];
+const categoriesNames = [];
 
 let isSidebarCollapsed = false;
 let isModalOn = false;
@@ -284,6 +285,7 @@ async function updateCategory() {
 
 function createCategoryItem(id, name, code, color) {
 	categoriesIDs.push(id);
+	categoriesNames.push(name);
 	const categoryItem = document.createElement('li');
 	categoryItem.innerHTML = name;
 	categoryItem.classList.add(`category-color-${color}`);
@@ -355,8 +357,10 @@ function deleteCategoryItemLi(id, name) {
 	if (name === productCategoryLabel.value.toUpperCase()) {
 		productCategoryLabel.value = '';
 	}
-	const index = categoriesIDs.indexOf(id);
-	categoriesIDs.splice(index, 1);
+	const idIndex = categoriesIDs.indexOf(id);
+	categoriesIDs.splice(idIndex, 1);
+	const nameIndex = categoriesNames.indexOf(name);
+	categoriesNames.splice(nameIndex, 1);
 }
 
 async function getProducts() {
@@ -378,74 +382,17 @@ async function getProducts() {
 	updateProductSum();
 }
 
-async function saveProductData() {
+function saveProductData() {
 	if (isCreatingNewProduct) {
-		if (
-			!productNameLabel.value ||
-			!productDescriptionLabel.value ||
-			!productCodeLabel.value ||
-			!productPriceLabel.value ||
-			!productCategoryLabel.value
-		) {
-			showPopUp(
-				popUpBox,
-				'red',
-				'Todos os campos devem ser devidamente preenchidos.'
-			);
-		} else {
-			const name = productNameLabel.value.toUpperCase();
-			const description = productDescriptionLabel.value.toUpperCase();
-			const code = productCodeLabel.value;
-			const price = productPriceLabel.value;
-			const category = productCategoryLabel.value.toUpperCase();
-			const qty = productQuantityLabel.value;
-			if (validateProductCode(code)) {
-				const id = await registerNewProduct(
-					name,
-					description,
-					code,
-					price,
-					category,
-					qty
-				);
-				createRow(
-					id,
-					name,
-					code,
-					description,
-					qty,
-					price,
-					category
-				);
-				showPopUp(
-					popUpBox,
-					'green',
-					'O produto foi criado<br>com sucesso.',
-					3000
-				);
-				productsSum += qty * price;
-				updateProductSum();
-				closeModal();
-			}
+		if (validateProduct()) {
+			registerNewProduct();
+			closeModal();
 		}
 	} else {
 		isUpdatingProduct = true;
 	}
 	if (isUpdatingProduct) {
-		const name = productNameLabel.value.toUpperCase();
-		const description = productDescriptionLabel.value.toUpperCase();
-		const code = productCodeLabel.value;
-		const price = productPriceLabel.value;
-		const category = productCategoryLabel.value.toUpperCase();
-		const qty = productQuantityLabel.value;
-		if (
-			activeProductName === name &&
-			activeProductDescription === description &&
-			activeProductCode === code &&
-			activeProductPrice === price &&
-			activeProductCategory === category &&
-			activeProductQty === qty
-		) {
+		if (isTheSameProduct()) {
 			showPopUp(
 				popUpBox,
 				'yellow',
@@ -453,21 +400,17 @@ async function saveProductData() {
 				3000
 			);
 		} else {
-			updateProduct(
-				activeProductID,
-				name,
-				description,
-				code,
-				price,
-				category,
-				qty
-			);
-			showPopUp(
-				popUpBox,
-				'green',
-				'Produto alterado<br>com sucesso.',
-				3000
-			);
+			if (validateProduct()) {
+				updateProduct(
+					activeProductID,
+					productNameLabel.value.toUpperCase(),
+					productDescriptionLabel.value.toUpperCase(),
+					productCodeLabel.value,
+					parseFloat(productPriceLabel.value).toFixed(2),
+					productCategoryLabel.value.toUpperCase(),
+					productQuantityLabel.value
+				);
+			}
 		}
 		closeModal();
 	}
@@ -565,15 +508,14 @@ function createRow(id, name, code, description, qty, price, category) {
 	productTable.appendChild(productTableRow);
 }
 
-async function registerNewProduct(
-	name,
-	description,
-	code,
-	price,
-	category,
-	qty
-) {
-	const response = await fetch(dataBaseURL + 'products/', {
+async function registerNewProduct() {
+	const name = productNameLabel.value.toUpperCase();
+	const description = productDescriptionLabel.value.toUpperCase();
+	const code = productCodeLabel.value;
+	const price = parseFloat(productPriceLabel.value).toFixed(2);
+	const category = productCategoryLabel.value.toUpperCase();
+	const qty = productQuantityLabel.value;
+	const response = await fetch(dataBaseURL + 'products', {
 		method  : 'POST',
 		headers : {
 			'Content-Type' : 'application/json'
@@ -588,7 +530,17 @@ async function registerNewProduct(
 		})
 	});
 	const newProduct = await response.json();
-	return newProduct.id;
+	const id = newProduct.id;
+	const priceNumber = Number(price);
+	createRow(id, name, code, description, qty, priceNumber, category);
+	showPopUp(
+		popUpBox,
+		'green',
+		'O produto foi criado<br>com sucesso.',
+		3000
+	);
+	productsSum += qty * price;
+	updateProductSum();
 }
 
 async function updateProduct(
@@ -615,6 +567,7 @@ async function updateProduct(
 		})
 	});
 	updateTable();
+	showPopUp(popUpBox, 'green', 'Produto alterado<br>com sucesso.', 3000);
 }
 
 function deleteProduct(id, qty, price) {
@@ -652,7 +605,7 @@ function openModal(id, name, code, description, qty, price, category) {
 		activeProductID = id;
 		enableDeleteButton();
 		productNameLabel.value = name;
-		productPriceLabel.value = price;
+		productPriceLabel.value = price.toFixed(2);
 		productQuantityValor = qty;
 		updateProductQuantity();
 		productDescriptionLabel.value = description;
@@ -882,16 +835,92 @@ function replaceDot(priceString) {
 	return priceString;
 }
 
-function validateProductCode(code) {
-	if (code.length > 6) {
+function validateProduct() {
+	const name = productNameLabel.value.toUpperCase();
+	const description = productDescriptionLabel.value.toUpperCase();
+	const code = productCodeLabel.value;
+	const price = productPriceLabel.value;
+	const category = productCategoryLabel.value.toUpperCase();
+	const qty = productQuantityLabel.value;
+	if (
+		name === '' &&
+		description === '' &&
+		(code === '' || code === '0') &&
+		(price === '' || price === '0') &&
+		category === '' &&
+		(qty === '' || qty === '0')
+	) {
 		showPopUp(
 			popUpBox,
 			'red',
-			'O código do produto não pode ter mais que 6 (seis) dígitos.'
+			'Todos os campos devem ser devidamente preenchidos.'
 		);
 		return false;
 	}
-	return true;
+	if (name === '') {
+		showPopUp(popUpBox, 'red', 'Informe o nome do produto.', 3000);
+	} else if (price === '' || price === '0') {
+		showPopUp(
+			popUpBox,
+			'red',
+			'O preço do produto deve<br>ser diferente de 0 (zero).',
+			4500
+		);
+	} else if (qty === '' || qty === '0') {
+		showPopUp(
+			popUpBox,
+			'red',
+			'A quantidade do produto deve<br>ser diferente de 0 (zero).',
+			4500
+		);
+	} else if (description === '') {
+		showPopUp(
+			popUpBox,
+			'red',
+			'Informe a descrição<br>do produto.',
+			3000
+		);
+	} else if (category === '') {
+		showPopUp(
+			popUpBox,
+			'red',
+			'Informe a categoria<br>do produto.',
+			3000
+		);
+	} else if (!categoriesNames.includes(category)) {
+		showPopUp(
+			popUpBox,
+			'red',
+			'A categoria informada<br>não existe.',
+			3000
+		);
+	} else if (code === '' || code === '0' || code.length > 6) {
+		showPopUp(
+			popUpBox,
+			'red',
+			'O código do produto deve ser diferente de 0 (zero) e possuir no máximo 6 (seis) dígitos.',
+			5000
+		);
+	} else {
+		return true;
+	}
+}
+
+function isTheSameProduct() {
+	if (
+		activeProductName === productNameLabel.value.toUpperCase() &&
+		activeProductDescription ===
+			productDescriptionLabel.value.toUpperCase() &&
+		activeProductCode === productCodeLabel.value &&
+		activeProductPrice === productPriceLabel.value &&
+		activeProductCategory ===
+			productCategoryLabel.value.toUpperCase() &&
+		activeProductQty === productQuantityLabel.value
+	) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function validateCategory() {
@@ -1090,4 +1119,5 @@ function clearCategorySearch() {
 		document.getElementById(categoriesIDs[i]).remove();
 	}
 	categoriesIDs.length = 0;
+	categoriesNames.length = 0;
 }

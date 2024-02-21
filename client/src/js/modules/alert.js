@@ -38,6 +38,11 @@ const showPopUp = (
 			event.preventDefault();
 			popUp.remove();
 		});
+		document.addEventListener('keydown', event => {
+			if (event.key == 'Escape') {
+				popUp.remove();
+			}
+		});
 		setTimeout(() => {
 			popUp.style.opacity = '0';
 		}, duration);
