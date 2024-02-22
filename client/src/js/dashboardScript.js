@@ -41,7 +41,7 @@ let activeCategoryCode;
 let activeCategoryColor;
 
 getProducts();
-openCategoryModal();
+// openCategoryModal();
 
 userName.innerHTML = sessionStorage.getItem('loggedUser');
 
