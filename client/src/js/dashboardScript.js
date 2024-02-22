@@ -375,7 +375,7 @@ async function getProducts() {
 			productList[i].description,
 			productList[i].countInStock,
 			productList[i].price,
-			productList[i].category.name
+			productList[i].category
 		);
 		productsSum += productList[i].countInStock * productList[i].price;
 	}
@@ -438,8 +438,10 @@ function createRow(id, name, code, description, qty, price, category) {
 	productDetailsColumn.setAttribute('id', `${id}`);
 	productDetailsColumn.innerHTML =
 		'<i class="fa-solid fa-circle-info"></i>';
+	console.log(category.color);
+	productDetailsColumn.firstChild.style.color = category.color;
 	productDetailsColumn.onclick = () => {
-		openModal(id, name, code, description, qty, price, category);
+		openModal(id, name, code, description, qty, price, category.name);
 	};
 
 	// Delete column

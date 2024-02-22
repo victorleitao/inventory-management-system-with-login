@@ -88,9 +88,10 @@ router.post('/', async (req, res) => {
 		});
 
 		return res.status(201).json({
-			success : true,
-			message : 'Produto cadastrado com sucesso.',
-			id      : newRegister.id
+			success  : true,
+			message  : 'Produto cadastrado com sucesso.',
+			id       : newRegister.id,
+			category : newRegister.category
 		});
 	} catch (error) {
 		return res.status(404).json({
