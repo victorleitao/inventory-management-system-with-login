@@ -41,6 +41,7 @@ let activeCategoryCode;
 let activeCategoryColor;
 
 getProducts();
+openCategoryModal();
 
 userName.innerHTML = sessionStorage.getItem('loggedUser');
 
@@ -134,6 +135,10 @@ selectCategoryArrow.addEventListener('click', () => {
 		closeCategorySearch();
 		closeCategoryModal();
 	}
+});
+
+categoryColorLabel.addEventListener('click', () => {
+	console.log('OLAR!');
 });
 
 overlay.addEventListener('click', () => {
@@ -438,7 +443,6 @@ function createRow(id, name, code, description, qty, price, category) {
 	productDetailsColumn.setAttribute('id', `${id}`);
 	productDetailsColumn.innerHTML =
 		'<i class="fa-solid fa-circle-info"></i>';
-	console.log(category.color);
 	productDetailsColumn.firstChild.style.color = category.color;
 	productDetailsColumn.onclick = () => {
 		openModal(id, name, code, description, qty, price, category.name);
@@ -534,7 +538,16 @@ async function registerNewProduct() {
 	const newProduct = await response.json();
 	const id = newProduct.id;
 	const priceNumber = Number(price);
-	createRow(id, name, code, description, qty, priceNumber, category);
+	const categoryObject = newProduct.category;
+	createRow(
+		id,
+		name,
+		code,
+		description,
+		qty,
+		priceNumber,
+		categoryObject
+	);
 	showPopUp(
 		popUpBox,
 		'green',
@@ -663,12 +676,13 @@ function openCategoryModal(id = '', name = '', code = '', color = '') {
 		activeCategoryID = id;
 		categoryNameLabel.value = name;
 		categoryCodeLabel.value = code;
-		categoryColorLabel.value = color;
+		categoryColorLabel.style.background = color;
 	}
 }
 
 function closeCategoryModal() {
 	closeCategoryOverlay();
+	productCategoryLabel.focus();
 	addCategoryModal.style.opacity = '0';
 	isCreatingNewCategory = false;
 	setTimeout(() => {
@@ -680,7 +694,7 @@ function closeCategoryModal() {
 function clearCategoryModal() {
 	categoryNameLabel.value = '';
 	categoryCodeLabel.value = '';
-	categoryColorLabel.value = '';
+	categoryColorLabel.style.background = '';
 }
 
 function populateActiveProductVariables(

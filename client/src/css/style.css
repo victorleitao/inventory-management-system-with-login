@@ -918,8 +918,14 @@ input::-webkit-inner-spin-button {
 #createCategoryModalButton {
   background: var(--green-color);
 }
+
 #createCategoryModalButton.active {
   background: var(--blue-color);
+}
+
+#categoryColorLabel {
+  cursor: pointer;
+  caret-color: transparent;
 }
 
 .grid-area-category-exit-button {
