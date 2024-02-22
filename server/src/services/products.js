@@ -83,9 +83,11 @@ router.post('/', async (req, res) => {
 
 		await productCollection.insertMany(newProduct);
 
-		const newRegister = await productCollection.findOne({
-			code : req.body.code
-		});
+		const newRegister = await productCollection
+			.findOne({
+				code : req.body.code
+			})
+			.populate('category');
 
 		return res.status(201).json({
 			success  : true,
