@@ -1,65 +1,50 @@
-const showConfirmation = (
-	popUpBox,
-	color = 'yellow',
-	mensagem = 'Você tem certeza dessa ação?'
-) => {
-	if (document.getElementById('closePopup')) {
-		return;
-	} else {
-		const popUp = document.createElement('div');
-		popUp.classList.add('confirmation');
-		switch (color) {
-			case 'red':
-				popUp.classList.add('red');
-				break;
-			case 'yellow':
-				popUp.classList.add('yellow');
-				break;
-			case 'green':
-				popUp.classList.add('green');
-				break;
-			default:
-				popUp.classList.add('gray');
-		}
-		const popUpText = document.createElement('h4');
-		popUpText.innerHTML = mensagem;
-		const closeButton = document.createElement('a');
-		closeButton.innerHTML = '<i class="fa-solid fa-xmark"></i>';
-		closeButton.setAttribute('id', 'closePopup');
-		const yesButton = document.createElement('button');
-		yesButton.innerHTML = 'Sim';
-		yesButton.setAttribute('id', 'affirmative');
-		const noButton = document.createElement('button');
-		noButton.innerHTML = 'Não';
-		noButton.setAttribute('id', 'negative');
-		popUp.appendChild(closeButton);
-		popUp.appendChild(popUpText);
-		popUp.appendChild(yesButton);
-		popUp.appendChild(noButton);
-		popUpBox.appendChild(popUp);
-		closePopup.addEventListener('click', event => {
-			event.preventDefault();
-			popUp.remove();
-		});
-		affirmative.addEventListener('click', () => {
-			popUp.style.opacity = '0';
-			closeButton.removeAttribute('id');
-			console.log('verdade');
-			setTimeout(() => {
-				popUp.remove();
-			}, 200);
-			return true;
-		});
-		negative.addEventListener('click', () => {
-			popUp.style.opacity = '0';
-			closeButton.removeAttribute('id');
-			console.log('mentira');
-			setTimeout(() => {
-				popUp.remove();
-			}, 200);
-			return false;
-		});
+function showConfirmationPopup(
+	message = 'Tem certeza dessa ação?',
+	callback
+) {
+	if (message === '') {
+		message = 'Tem certeza dessa ação?';
 	}
-};
+	openConfirmationOverlay();
+	const confirmationPopup = document.createElement('div');
+	confirmationPopup.classList.add('confirmation-box');
 
-export default showConfirmation;
+	const messageBox = document.createElement('h4');
+	messageBox.classList.add('message-box');
+	messageBox.innerHTML = message;
+
+	const buttonBox = document.createElement('div');
+	buttonBox.classList.add('button-box');
+
+	const yesButton = document.createElement('button');
+	yesButton.classList.add('yes-button');
+	yesButton.innerText = 'Sim';
+	yesButton.addEventListener('click', () => {
+		callback(true);
+		confirmationPopup.remove();
+		closeConfirmationOverlay();
+	});
+
+	const noButton = document.createElement('button');
+	noButton.classList.add('no-button');
+	noButton.innerText = 'Não';
+	noButton.addEventListener('click', () => {
+		callback(false);
+		confirmationPopup.remove();
+		closeConfirmationOverlay();
+	});
+
+	confirmationPopup.appendChild(messageBox);
+	confirmationPopup.appendChild(buttonBox);
+	buttonBox.appendChild(yesButton);
+	buttonBox.appendChild(noButton);
+	document.body.appendChild(confirmationPopup);
+}
+
+function openConfirmationOverlay() {
+	confirmationOverlay.classList.add('active');
+}
+
+function closeConfirmationOverlay() {
+	confirmationOverlay.classList.remove('active');
+}

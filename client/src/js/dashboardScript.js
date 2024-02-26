@@ -41,7 +41,6 @@ let activeCategoryCode;
 let activeCategoryColor;
 
 getProducts();
-// openCategoryModal();
 
 userName.innerHTML = sessionStorage.getItem('loggedUser');
 
@@ -137,10 +136,6 @@ selectCategoryArrow.addEventListener('click', () => {
 	}
 });
 
-categoryColorLabel.addEventListener('click', () => {
-	console.log('OLAR!');
-});
-
 overlay.addEventListener('click', () => {
 	closeModal();
 });
@@ -175,7 +170,6 @@ editModalButton.onclick = () => {
 deleteModalButton.onclick = () => {
 	event.preventDefault();
 	deleteProduct(activeProductID, activeProductQty, activeProductPrice);
-	closeModal();
 };
 
 closeModalButton.onclick = () => {
@@ -185,14 +179,6 @@ closeModalButton.onclick = () => {
 
 filterProductsButton.onclick = () => {
 	showPopUp(popUpBox, 'red');
-	// let confirmation = showConfirmation(popUpBox);
-	// if (confirmation) {
-	// 	console.log(confirmation);
-	// 	return true;
-	// } else {
-	// 	console.log(confirmation);
-	// 	return false;
-	// }
 };
 
 updateTableButton.onclick = () => {
@@ -320,41 +306,56 @@ function createCategoryItem(id, name, code, color) {
 }
 
 async function deleteCategoryItem(id, name) {
-	const response = await fetch(dataBaseURL + 'categories/' + id, {
-		method : 'DELETE'
-	});
-	const status = await response.json();
-	if (status.success) {
-		deleteCategoryItemLi(id, name);
-		showPopUp(
-			popUpBox,
-			'red',
-			'Categoria deletada<br>com sucesso.',
-			3500
-		);
-	} else {
-		const productsList = status.productsList;
-		let mensagem =
-			'Essa categoria está registrada nos seguintes produtos:<p>';
-		let duration = 5000;
-		if (productsList.length > 1) {
-			for (let i = 0; i < productsList.length; i++) {
-				if (i === 0) {
-					mensagem += `${i + 1}. ${productsList[i].name}`;
-					duration += 1000;
+	showConfirmationPopup(
+		'Essa categoria será deletada.\nDeseja prosseguir?',
+		async result => {
+			if (result) {
+				const response = await fetch(
+					dataBaseURL + 'categories/' + id,
+					{
+						method : 'DELETE'
+					}
+				);
+				const status = await response.json();
+				if (status.success) {
+					deleteCategoryItemLi(id, name);
+					showPopUp(
+						popUpBox,
+						'red',
+						'Categoria deletada<br>com sucesso.',
+						3500
+					);
 				} else {
-					mensagem += `<br>${i + 1}. ${productsList[i].name}`;
-					duration += 1000;
+					const productsList = status.productsList;
+					let mensagem =
+						'Essa categoria está registrada nos seguintes produtos:<p>';
+					let duration = 5000;
+					if (productsList.length > 1) {
+						for (let i = 0; i < productsList.length; i++) {
+							if (i === 0) {
+								mensagem += `${i + 1}. ${productsList[i]
+									.name}`;
+								duration += 1000;
+							} else {
+								mensagem += `<br>${i + 1}. ${productsList[
+									i
+								].name}`;
+								duration += 1000;
+							}
+						}
+						mensagem +=
+							'</p>Atualize-os para<br>permitir a exclusão.';
+					} else {
+						mensagem = `O produto ${productsList[0]
+							.name} pertence a esta categoria.<br><br>Atualize-o para<br>permitir a exclusão.`;
+						duration += 1000;
+					}
+					showPopUp(popUpBox, 'yellow', mensagem, duration);
 				}
+			} else {
 			}
-			mensagem += '</p>Atualize-os para<br>permitir a exclusão.';
-		} else {
-			mensagem = `O produto ${productsList[0]
-				.name} pertence a esta categoria.<br><br>Atualize-o para<br>permitir a exclusão.`;
-			duration += 1000;
 		}
-		showPopUp(popUpBox, 'yellow', mensagem, duration);
-	}
+	);
 }
 
 function deleteCategoryItemLi(id, name) {
@@ -586,12 +587,21 @@ async function updateProduct(
 }
 
 function deleteProduct(id, qty, price) {
-	productsSum -= qty * price;
-	updateProductSum();
-	fetch(dataBaseURL + 'products/' + id, {
-		method : 'DELETE'
-	});
-	deleteProductRow(id);
+	showConfirmationPopup(
+		'Esse produto será deletado.\nDeseja prosseguir?',
+		result => {
+			if (result) {
+				productsSum -= qty * price;
+				updateProductSum();
+				fetch(dataBaseURL + 'products/' + id, {
+					method : 'DELETE'
+				});
+				deleteProductRow(id);
+				closeModal();
+			} else {
+			}
+		}
+	);
 }
 
 function deleteProductRow(id) {
@@ -664,7 +674,12 @@ function clearModal() {
 	productCategoryLabel.value = '';
 }
 
-function openCategoryModal(id = '', name = '', code = '', color = '') {
+function openCategoryModal(
+	id = '',
+	name = '',
+	code = '',
+	color = '#eaeaea'
+) {
 	disableCategoryEdition();
 	addCategoryModal.style.display = 'grid';
 	addCategoryModal.style.opacity = '1';
@@ -676,7 +691,7 @@ function openCategoryModal(id = '', name = '', code = '', color = '') {
 		activeCategoryID = id;
 		categoryNameLabel.value = name;
 		categoryCodeLabel.value = code;
-		categoryColorLabel.style.background = color;
+		categoryColorLabel.value = color;
 	}
 }
 
@@ -694,7 +709,7 @@ function closeCategoryModal() {
 function clearCategoryModal() {
 	categoryNameLabel.value = '';
 	categoryCodeLabel.value = '';
-	categoryColorLabel.style.background = '';
+	categoryColorLabel.value = '#eaeaea';
 }
 
 function populateActiveProductVariables(

@@ -1,7 +1,7 @@
 const showPopUp = (
 	popUpBox,
 	color,
-	mensagem = 'Essa função ainda não foi implementada.',
+	message = 'Essa função ainda não foi implementada.',
 	duration = 4000
 ) => {
 	if (document.getElementById('closePopup')) {
@@ -23,7 +23,7 @@ const showPopUp = (
 				popUp.classList.add('gray');
 		}
 		const popUpText = document.createElement('h4');
-		popUpText.innerHTML = mensagem;
+		popUpText.innerHTML = message;
 		const durationBar = document.createElement('div');
 		durationBar.setAttribute('id', 'durationBar');
 		durationBar.style.animation = `anim ${duration}ms linear forwards`;
