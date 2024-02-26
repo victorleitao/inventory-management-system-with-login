@@ -18,6 +18,7 @@ const categoriesIDs = [];
 const categoriesNames = [];
 
 let isSidebarCollapsed = false;
+let isCategoryColored = true;
 let isModalOn = false;
 let isEditing = false;
 let isCreatingNewProduct = false;
@@ -143,6 +144,10 @@ overlay.addEventListener('click', () => {
 categoryOverlay.addEventListener('click', () => {
 	closeCategoryModal();
 });
+
+productHeaderDetails.onclick = () => {
+	changeCategoryColors(isCategoryColored);
+};
 
 addProductButton.onclick = () => {
 	if (!isModalOn) {
@@ -441,6 +446,7 @@ function createRow(id, name, code, description, qty, price, category) {
 	// Details column
 	const productDetailsColumn = document.createElement('td');
 	productDetailsColumn.classList.add('product-item-details');
+	productDetailsColumn.classList.add(category.color);
 	productDetailsColumn.setAttribute('id', `${id}`);
 	productDetailsColumn.innerHTML =
 		'<i class="fa-solid fa-circle-info"></i>';
@@ -1133,6 +1139,24 @@ function clearTable() {
 	}
 	productsIDs.length = 0;
 	numberOfRows = 0;
+}
+
+function changeCategoryColors(categoryColorState) {
+	if (categoryColorState) {
+		for (let i = 0; i < productsIDs.length; i++) {
+			const detailIcon = document.getElementById(productsIDs[i]);
+			detailIcon.firstChild.style.color = '#111111';
+		}
+		isCategoryColored = false;
+	} else {
+		for (let i = 0; i < productsIDs.length; i++) {
+			const detailIcon = document.getElementById(productsIDs[i]);
+			const originalColor =
+				detailIcon.classList[detailIcon.classList.length - 1];
+			detailIcon.firstChild.style.color = originalColor;
+		}
+		isCategoryColored = true;
+	}
 }
 
 function openCategorySearch() {

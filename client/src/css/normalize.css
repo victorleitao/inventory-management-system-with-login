@@ -20,7 +20,8 @@ h4 {
   font-size: 18px;
 }
 
-.tooltip .tooltip-text {
+.tooltip .tooltip-text,
+.tooltip .tooltip-down {
   font-family: 'Roboto', sans-serif;
   font-size: 0.8em;
   color: var(--white-color);
